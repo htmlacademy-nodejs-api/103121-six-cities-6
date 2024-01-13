@@ -26,7 +26,30 @@ export class TSVFileReader implements FileReader {
       .split('\n')
       .filter((row) => row.trim().length > 0)
       .map((line) => line.split('\t'))
-      .map(([title, description, postDate, city, previewImage, propertyImages, isPremium, isFavorite, rating, propertyType, roomsNumber, guestsNumber, price, amenities, name, email, avatar, password, userType, commentsCount, latitude, longitude]) => ({
+      .map(([
+        title,
+        description,
+        postDate,
+        city,
+        previewImage,
+        propertyImages,
+        isPremium,
+        isFavorite,
+        rating,
+        propertyType,
+        roomsNumber,
+        guestsNumber,
+        price,
+        amenities,
+        name,
+        email,
+        avatar,
+        password,
+        userType,
+        commentsCount,
+        latitude,
+        longitude
+      ]) => ({
         title,
         description,
         postDate: new Date(postDate),
