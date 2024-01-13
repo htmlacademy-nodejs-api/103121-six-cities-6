@@ -1,13 +1,13 @@
-import { Amenity } from "./amenity-type.enum.js";
-import { City } from "./city.enum.js";
-import { Coordinates } from "./coordinates.type.js";
-import { Property } from "./property-type.enum.js";
-import { User } from "./user.type.js";
+import { Amenity } from './amenity-type.enum.js';
+import { City } from './city.enum.js';
+import { Coordinates } from './coordinates.type.js';
+import { Property } from './property-type.enum.js';
+import { User } from './user.type.js';
 
 export type Offer = {
   title: string;
   description: string;
-  postDate: string;
+  postDate: Date;
   city: City;
   previewImage: string;
   propertyImages: string[];
@@ -19,7 +19,7 @@ export type Offer = {
   guestsNumber: number;
   price: number;
   amenities: Amenity[];
-  author: User;
+  user: User;
   commentsCount: number;
   coordinates: Coordinates;
 }
