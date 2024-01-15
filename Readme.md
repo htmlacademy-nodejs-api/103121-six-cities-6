@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Артём Трикашный](https://up.htmlacademy.ru/nodejs-api/6/user/103121).
-* Наставник: [`Андрей Осипук`](https://htmlacademy.ru/profile/id616431).
+* Наставник: [Андрей Осипук](https://htmlacademy.ru/profile/id616431).
 
 ---
 
