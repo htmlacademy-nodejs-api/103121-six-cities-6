@@ -21,12 +21,12 @@
       "Апартаменты на берегу реки с потрясающим видом на воду. Романтическая обстановка для влюбленных."
     ],
     "cities": [
-      "Париж",
-      "Колонье",
-      "Брюссель",
-      "Амстердам",
-      "Гамбург",
-      "Дюссельдорф"
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
     ],
     "previewImages": [
       "https://example.com/studio-preview.jpg",
@@ -104,15 +104,14 @@
         "https://example.com/riverfront-apartment-image6.jpg"
       ]
     ],
-    "propertyTypes": ["apartment", "house", "room", "hotel"],
+    "propertyTypes": ["Apartment", "House", "Room", "Hotel"],
     "amenities": [
       "Breakfast",
-      "Air conditioning",
-      "Laptop friendly workspace",
-      "Baby seat",
+      "AirConditioning",
+      "LaptopFriendly",
+      "BabySeat",
       "Washer",
       "Towels",
-      "Лофт с промышленным дизайном",
       "Fridge"
     ],
     "names": [
@@ -145,6 +144,7 @@
       "roland.jpg",
       "smite.jpg",
       "coffee.jpg"
-    ]
+    ],
+    "userTypes" : ["Common", "Pro"]
   }
 }
