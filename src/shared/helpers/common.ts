@@ -16,6 +16,10 @@ export function generateRandomString(minLength: number, maxLength: number): stri
   return result;
 }
 
+export function generateRandomBoolean(): boolean {
+  return Math.random() < 0.5;
+}
+
 export function getRandomItems<T>(items: T[]):T[] {
   const startPosition = generateRandomValue(0, items.length - 1);
   const endPosition = startPosition + generateRandomValue(startPosition, items.length);
@@ -26,6 +30,6 @@ export function getRandomItem<T>(items: T[]):T {
   return items[generateRandomValue(0, items.length - 1)];
 }
 
-export function generateRandomBoolean(): boolean {
-  return Math.random() < 0.5;
+export function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : '';
 }
