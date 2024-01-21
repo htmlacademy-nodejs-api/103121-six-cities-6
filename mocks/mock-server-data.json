@@ -1,0 +1,198 @@
+{
+  "api": {
+    "titles": [
+      "Уютная студия в историческом районе",
+      "Просторная квартира с видом на парк",
+      "Современный пентхаус в центре города",
+      "Элегантная квартира с балконом",
+      "Студия с панорамными окнами",
+      "Двухэтажный дом в пригороде",
+      "Лофт с промышленным дизайном",
+      "Апартаменты на берегу реки"
+    ],
+    "descriptions": [
+      "Прекрасная студия с современным ремонтом в историческом районе города. Идеальное место для романтического отдыха.",
+      "Светлая и просторная квартира с уникальным видом на природу. Отличное место для семейного отдыха.",
+      "Элитный пентхаус с современным дизайном в самом центре города. Роскошь и комфорт в одном.",
+      "Уютная квартира с элегантной мебелью и прекрасным балконом. Идеальное место для уединенного отдыха.",
+      "Студия с панорамными окнами, создающими впечатление единства с окружающим миром. Идеально для творческих людей.",
+      "Двухэтажный дом в пригороде с собственным двором и зоной отдыха. Идеальное место для семейных посиделок.",
+      "Лофт с промышленным дизайном, создающий атмосферу творчества и стильного отдыха.",
+      "Апартаменты на берегу реки с потрясающим видом на воду. Романтическая обстановка для влюбленных."
+    ],
+    "postDates": [
+      "2024-01-21T12:30:00Z",
+      "2024-01-21T13:45:00Z",
+      "2024-01-21T15:20:00Z",
+      "2024-01-21T17:10:00Z",
+      "2024-01-21T18:45:00Z",
+      "2024-01-21T20:30:00Z",
+      "2024-01-21T22:15:00Z",
+      "2024-01-21T23:50:00Z"
+    ],
+    "cities": [
+      "Париж",
+      "Колонье",
+      "Брюссель",
+      "Амстердам",
+      "Гамбург",
+      "Дюссельдорф"
+    ],
+    "previewImages": [
+      "https://example.com/studio-preview.jpg",
+      "https://example.com/park-view.jpg",
+      "https://example.com/penthouse.jpg",
+      "https://example.com/elegant-apartment.jpg",
+      "https://example.com/studio-panorama.jpg",
+      "https://example.com/suburban-house.jpg",
+      "https://example.com/industrial-loft.jpg",
+      "https://example.com/riverfront-apartment.jpg"
+    ],
+    "propertyImages": [
+      [
+        "https://example.com/studio-image1.jpg",
+        "https://example.com/studio-image2.jpg",
+        "https://example.com/studio-image3.jpg",
+        "https://example.com/studio-image4.jpg",
+        "https://example.com/studio-image5.jpg",
+        "https://example.com/studio-image6.jpg"
+      ],
+      [
+        "https://example.com/park-view-image1.jpg",
+        "https://example.com/park-view-image2.jpg",
+        "https://example.com/park-view-image3.jpg",
+        "https://example.com/park-view-image4.jpg",
+        "https://example.com/park-view-image5.jpg",
+        "https://example.com/park-view-image6.jpg"
+      ],
+      [
+        "https://example.com/penthouse-image1.jpg",
+        "https://example.com/penthouse-image2.jpg",
+        "https://example.com/penthouse-image3.jpg",
+        "https://example.com/penthouse-image4.jpg",
+        "https://example.com/penthouse-image5.jpg",
+        "https://example.com/penthouse-image6.jpg"
+      ],
+      [
+        "https://example.com/elegant-apartment-image1.jpg",
+        "https://example.com/elegant-apartment-image2.jpg",
+        "https://example.com/elegant-apartment-image3.jpg",
+        "https://example.com/elegant-apartment-image4.jpg",
+        "https://example.com/elegant-apartment-image5.jpg",
+        "https://example.com/elegant-apartment-image6.jpg"
+      ],
+      [
+        "https://example.com/studio-panorama-image1.jpg",
+        "https://example.com/studio-panorama-image2.jpg",
+        "https://example.com/studio-panorama-image3.jpg",
+        "https://example.com/studio-panorama-image4.jpg",
+        "https://example.com/studio-panorama-image5.jpg",
+        "https://example.com/studio-panorama-image6.jpg"
+      ],
+      [
+        "https://example.com/suburban-house-image1.jpg",
+        "https://example.com/suburban-house-image2.jpg",
+        "https://example.com/suburban-house-image3.jpg",
+        "https://example.com/suburban-house-image4.jpg",
+        "https://example.com/suburban-house-image5.jpg",
+        "https://example.com/suburban-house-image6.jpg"
+      ],
+      [
+        "https://example.com/industrial-loft-image1.jpg",
+        "https://example.com/industrial-loft-image2.jpg",
+        "https://example.com/industrial-loft-image3.jpg",
+        "https://example.com/industrial-loft-image4.jpg",
+        "https://example.com/industrial-loft-image5.jpg",
+        "https://example.com/industrial-loft-image6.jpg"
+      ],
+      [
+        "https://example.com/riverfront-apartment-image1.jpg",
+        "https://example.com/riverfront-apartment-image2.jpg",
+        "https://example.com/riverfront-apartment-image3.jpg",
+        "https://example.com/riverfront-apartment-image4.jpg",
+        "https://example.com/riverfront-apartment-image5.jpg",
+        "https://example.com/riverfront-apartment-image6.jpg"
+      ]
+    ],
+    "isPremium": [true, false],
+    "isFavorite": [true, false],
+    "ratings": [4.8, 4.5, 4.9, 4.2, 4.7, 4.3, 4.6, 4.8],
+    "propertyTypes": ["apartment", "house", "room", "hotel"],
+    "roomsNumbers": [1, 2, 3, 4, 5, 6, 7, 8],
+    "guestsNumbers": [1, 2, 3, 4, 5, 6, 7, 8],
+    "prices": [1200, 2000, 3000, 1500, 1300, 2500, 1800, 2200],
+    "amenities": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Лофт с промышленным дизайном",
+      "Fridge"
+    ],
+    "names": [
+      "Иван Иванов",
+      "Олег Сидоров",
+      "Пьер Безухов",
+      "Роланд Дискейн",
+      "Холи Гибни",
+      "Джек Торренс",
+      "Антон Городецкий",
+      "Борис Гесер",
+      "Рокки Бальбоа",
+      "Джон Смит"
+    ],
+    "emails": [
+      "snow@pisem.local",
+      "president@dka.local",
+      "fish@big.local",
+      "test@pisem.local",
+      "freedom@pisem.local",
+      "rolan@pochta.local",
+      "author@mir.local",
+      "test@lost.loca",
+      "kujo-fan@story.local"
+    ],
+    "avatars": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smite.jpg",
+      "coffee.jpg"
+    ],
+    "passwords": [
+      "123345",
+      "qwerty",
+      "asdfg",
+      "zxcvzxc",
+      "jkghjk",
+      "uioyuyio",
+      "567543634",
+      "bsdgw454hfg"
+    ],
+    "userTypes": ["обычный", "pro"],
+    "commentsCount": [13, 1, 2, 3, 4, 5, 6, 7, 8],
+    "latitudes": [
+      4.85309666406198,
+      4.85309666406198,
+      4.929309666406198,
+      4.939309666406198,
+      4.85309666406198,
+      4.939309666406198,
+      4.929309666406198,
+      4.939309666406198
+    ],
+    "longitudes": [
+      52.3909553943508,
+      52.369553943508,
+      52.3909553943508,
+      52.3809553943508,
+      52.3609553943508,
+      52.4009553943508,
+      52.4109553943508,
+      52.4209553943508
+    ]
+  }
+}
