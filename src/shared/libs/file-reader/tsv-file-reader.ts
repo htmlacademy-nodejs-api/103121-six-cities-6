@@ -1,10 +1,6 @@
 import { FileReader } from './file-reader.interface.js';
 import { readFileSync } from 'node:fs';
-import { Offer } from '../../types/offer.type.js';
-import { City } from '../../types/city.enum.js';
-import { Property } from '../../types/property-type.enum.js';
-import { Amenity } from '../../types/amenity-type.enum.js';
-import { UserType } from '../../types/user-type.enum.js';
+import { Offer, City, Property, Amenity, UserType } from '../../types/index.js';
 
 export class TSVFileReader implements FileReader {
   private rawData = '';
