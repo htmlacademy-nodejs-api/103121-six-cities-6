@@ -1,0 +1,150 @@
+{
+  "api": {
+    "titles": [
+      "Уютная студия в историческом районе",
+      "Просторная квартира с видом на парк",
+      "Современный пентхаус в центре города",
+      "Элегантная квартира с балконом",
+      "Студия с панорамными окнами",
+      "Двухэтажный дом в пригороде",
+      "Лофт с промышленным дизайном",
+      "Апартаменты на берегу реки"
+    ],
+    "descriptions": [
+      "Прекрасная студия с современным ремонтом в историческом районе города. Идеальное место для романтического отдыха.",
+      "Светлая и просторная квартира с уникальным видом на природу. Отличное место для семейного отдыха.",
+      "Элитный пентхаус с современным дизайном в самом центре города. Роскошь и комфорт в одном.",
+      "Уютная квартира с элегантной мебелью и прекрасным балконом. Идеальное место для уединенного отдыха.",
+      "Студия с панорамными окнами, создающими впечатление единства с окружающим миром. Идеально для творческих людей.",
+      "Двухэтажный дом в пригороде с собственным двором и зоной отдыха. Идеальное место для семейных посиделок.",
+      "Лофт с промышленным дизайном, создающий атмосферу творчества и стильного отдыха.",
+      "Апартаменты на берегу реки с потрясающим видом на воду. Романтическая обстановка для влюбленных."
+    ],
+    "cities": [
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
+    ],
+    "previewImages": [
+      "https://example.com/studio-preview.jpg",
+      "https://example.com/park-view.jpg",
+      "https://example.com/penthouse.jpg",
+      "https://example.com/elegant-apartment.jpg",
+      "https://example.com/studio-panorama.jpg",
+      "https://example.com/suburban-house.jpg",
+      "https://example.com/industrial-loft.jpg",
+      "https://example.com/riverfront-apartment.jpg"
+    ],
+    "propertyImages": [
+      [
+        "https://example.com/studio-image1.jpg",
+        "https://example.com/studio-image2.jpg",
+        "https://example.com/studio-image3.jpg",
+        "https://example.com/studio-image4.jpg",
+        "https://example.com/studio-image5.jpg",
+        "https://example.com/studio-image6.jpg"
+      ],
+      [
+        "https://example.com/park-view-image1.jpg",
+        "https://example.com/park-view-image2.jpg",
+        "https://example.com/park-view-image3.jpg",
+        "https://example.com/park-view-image4.jpg",
+        "https://example.com/park-view-image5.jpg",
+        "https://example.com/park-view-image6.jpg"
+      ],
+      [
+        "https://example.com/penthouse-image1.jpg",
+        "https://example.com/penthouse-image2.jpg",
+        "https://example.com/penthouse-image3.jpg",
+        "https://example.com/penthouse-image4.jpg",
+        "https://example.com/penthouse-image5.jpg",
+        "https://example.com/penthouse-image6.jpg"
+      ],
+      [
+        "https://example.com/elegant-apartment-image1.jpg",
+        "https://example.com/elegant-apartment-image2.jpg",
+        "https://example.com/elegant-apartment-image3.jpg",
+        "https://example.com/elegant-apartment-image4.jpg",
+        "https://example.com/elegant-apartment-image5.jpg",
+        "https://example.com/elegant-apartment-image6.jpg"
+      ],
+      [
+        "https://example.com/studio-panorama-image1.jpg",
+        "https://example.com/studio-panorama-image2.jpg",
+        "https://example.com/studio-panorama-image3.jpg",
+        "https://example.com/studio-panorama-image4.jpg",
+        "https://example.com/studio-panorama-image5.jpg",
+        "https://example.com/studio-panorama-image6.jpg"
+      ],
+      [
+        "https://example.com/suburban-house-image1.jpg",
+        "https://example.com/suburban-house-image2.jpg",
+        "https://example.com/suburban-house-image3.jpg",
+        "https://example.com/suburban-house-image4.jpg",
+        "https://example.com/suburban-house-image5.jpg",
+        "https://example.com/suburban-house-image6.jpg"
+      ],
+      [
+        "https://example.com/industrial-loft-image1.jpg",
+        "https://example.com/industrial-loft-image2.jpg",
+        "https://example.com/industrial-loft-image3.jpg",
+        "https://example.com/industrial-loft-image4.jpg",
+        "https://example.com/industrial-loft-image5.jpg",
+        "https://example.com/industrial-loft-image6.jpg"
+      ],
+      [
+        "https://example.com/riverfront-apartment-image1.jpg",
+        "https://example.com/riverfront-apartment-image2.jpg",
+        "https://example.com/riverfront-apartment-image3.jpg",
+        "https://example.com/riverfront-apartment-image4.jpg",
+        "https://example.com/riverfront-apartment-image5.jpg",
+        "https://example.com/riverfront-apartment-image6.jpg"
+      ]
+    ],
+    "propertyTypes": ["Apartment", "House", "Room", "Hotel"],
+    "amenities": [
+      "Breakfast",
+      "AirConditioning",
+      "LaptopFriendly",
+      "BabySeat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "names": [
+      "Иван Иванов",
+      "Олег Сидоров",
+      "Пьер Безухов",
+      "Роланд Дискейн",
+      "Холи Гибни",
+      "Джек Торренс",
+      "Антон Городецкий",
+      "Борис Гесер",
+      "Рокки Бальбоа",
+      "Джон Смит"
+    ],
+    "emails": [
+      "snow@pisem.local",
+      "president@dka.local",
+      "fish@big.local",
+      "test@pisem.local",
+      "freedom@pisem.local",
+      "rolan@pochta.local",
+      "author@mir.local",
+      "test@lost.loca",
+      "kujo-fan@story.local"
+    ],
+    "avatars": [
+      "user.jpg",
+      "photo.jpg",
+      "awesome-avatar.jpg",
+      "roland.jpg",
+      "smite.jpg",
+      "coffee.jpg"
+    ],
+    "userTypes" : ["Common", "Pro"]
+  }
+}
