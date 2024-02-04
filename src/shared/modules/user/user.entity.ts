@@ -14,16 +14,18 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({
     required: true,
     minlength: [1, 'Min length for name is 1'],
-    maxlength: [15, 'Max length for name is 15']
+    maxlength: [15, 'Max length for name is 15'],
+    trim: true,
   })
-  public name: string;
+  public name!: string;
 
   @prop({
     unique: true,
     required: true,
-    match: [/^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'Email is incorrect']
+    match: [/^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'Email is incorrect'],
+    trim: true,
   })
-  public email: string;
+  public email!: string;
 
   @prop({
     required: false,
@@ -35,14 +37,16 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({
     required: true,
     minlength: [6, 'Min length for password is 6'],
+    trim: true,
   })
-  public password: string;
+  public password!: string;
 
   @prop({
     required: true,
+    type: () => String,
     enum: UserType,
   })
-  public userType: UserType;
+  public userType!: UserType;
 
   constructor(userData: User) {
     super();
