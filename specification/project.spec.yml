@@ -1,0 +1,658 @@
+openapi: 3.0.0
+info:
+  title: API сервер для демо-проекта «Шесть городов».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Шесть городов».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 2.0.0
+tags:
+  - name: offers
+    description: Действия с объявлениями.
+  - name: comments
+    description: Действия с комментариями.
+  - name: users
+    description: Действия с пользователем.
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Регистрация пользователя.
+      description: Регистрирует нового пользователя.
+
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+        required: true
+
+      responses:
+        "201":
+          description: Пользователь зарегистрирован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "409":
+          description: Пользователь с таким email уже существует.
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя.
+      description: Авторизует пользователя на основе логина и пароля.
+
+      requestBody:
+        description: Информация для авторизации пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authUser'
+        required: true
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Токен пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authToken'
+
+        "401":
+          description: Логин или пароль неверный или пользователь не существует.
+
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя.
+      description: Возвращает информацию по авторизованному пользователю.
+
+      responses:
+        "200":
+          description: Пользователь авторизован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "401":
+          description: Пользователь не авторизован.
+
+    delete:
+      tags:
+        - users
+      summary: Выход пользователя из системы.
+      description: Производит выход пользователя из системы.
+
+      requestBody:
+        description: Токен пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/authToken'
+        required: true
+
+      responses:
+        "204":
+          description: Пользователь вышел.
+
+        "401":
+          description: Токен не прошел проверку.
+
+  /offers:
+    get:
+      tags:
+        - offers
+      summary: Получение списка предложений.
+      description: Возвращает список предложений.
+
+      responses:
+        "200":
+          description: Список предложений.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+        "404":
+          description: Предложения не найдены.
+
+  /offers/{offerId}:
+    get:
+      tags:
+        - offers
+      summary: Детальная информация по предложению.
+      description: Возвращает предложение по id.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Предложение найдено.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detailedOffer'
+
+        "404":
+          description: Предложение не найдено.
+
+    put:
+      tags:
+        - offers
+      summary: Редактирование предложения.
+      description: Редактирует предложение.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      requestBody:
+        description: Отредактированное предложение.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/detailedOffer'
+        required: true
+
+      responses:
+        "201":
+          description: Предложение отредактировано.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detailedOffer'
+
+        "404":
+          description: Предложение не найдено.
+
+        "409":
+          description: Пользователь не является владельцем предложения.
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление предложения.
+      description: Удаляет предложение.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      responses:
+        "204":
+          description: Предложение удалено.
+
+        "404":
+          description: Предложение не найдено.
+
+        "409":
+          description: Пользователь не является владельцем предложения.
+
+  /offers/create:
+    post:
+      tags:
+        - offers
+      summary: Создание предложения.
+      description: Создает новое предложение.
+
+      requestBody:
+        description: Информация для создания нового предложения.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/detailedOffer'
+        required: true
+
+      responses:
+        "201":
+          description: Предложение создано.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/detailedOffer'
+
+        "400":
+          description: Предложение не создано. Неверные данные.
+
+        "401":
+          description: Пользователь не авторизован.
+
+  /offers/{offerId}/comments:
+    get:
+      tags:
+        - comments
+      summary: Получение списка комментариев.
+      description: Возвращает список комментариев к предложению.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Список комментариев.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/comment'
+
+        "404":
+          description: Комментарии не найдены.
+
+    post:
+      tags:
+        - comments
+      summary: Добавление комментария.
+      description: Добавляет комментарий к предложению.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      requestBody:
+        description: Информация для создания нового комментария.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/comment'
+        required: true
+
+      responses:
+        "201":
+          description: Комментарий добавлен.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/comment'
+
+        "401":
+          description: Пользователь не авторизован. Комментарий не добавлен.
+
+  /offers/${city}/premium:
+    get:
+      tags:
+        - offers
+      summary: Получение списка премиум-предложений.
+      description: Возвращает список премиум-предложений по городу.
+
+      parameters:
+        - name: city
+          in: path
+          required: true
+          description: Город.
+          schema:
+            type: string
+            enum:
+              - Paris
+              - Cologne
+              - Brussels
+              - Amsterdam
+              - Hamburg
+              - Dusseldorf
+
+      responses:
+        "200":
+          description: Список премиум-предложений.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+
+        "404":
+          description: Премиум-предложения не найдены.
+
+  /user/favorites:
+    get:
+      tags:
+        - users
+      summary: Получение списка избранных предложений.
+      description: Возвращает список избранных предложений пользователя.
+
+      responses:
+        "200":
+          description: Список избранных предложений.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+
+        "404":
+          description: Избранные предложения не найдены.
+
+    post:
+      tags:
+        - users
+      summary: Добавление предложения в избранное.
+      description: Добавляет предложение в избранное.
+
+      requestBody:
+        description: ID предложения.
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+
+      responses:
+        "201":
+          description: Предложение добавлено в избранное.
+
+        "404":
+          description: Предложение не найдено.
+
+    delete:
+      tags:
+        - users
+      summary: Удаление предложения из избранного.
+      description: Удаляет предложение из избранного.
+
+      requestBody:
+        description: ID предложения.
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+
+      responses:
+        "204":
+          description: Предложение удалено из избранного.
+
+        "404":
+          description: Предложение не найдено.
+
+components:
+  schemas:
+    createUser:
+      type: object
+
+      properties:
+        name:
+          type: string
+          example: Artem Ivanov
+
+        email:
+          type: string
+          example: artem@mail.ru
+
+        avatar:
+          type: string
+          example: user.jpg
+
+        password:
+          type: string
+          example: qwerty
+
+    authUser:
+      type: object
+
+      properties:
+        email:
+          type: string
+          example: artem@mail.ru
+
+        password:
+          type: string
+          example: qwerty
+
+    user:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        name:
+          type: string
+          example: Artem Ivanov
+
+        email:
+          type: string
+          example: artem@mail.ru
+
+        avatar:
+          type: string
+          example: user.jpg
+
+        userType:
+          type: string
+          enum:
+            - Common
+            - Pro
+          example: Common
+
+    authToken:
+      type: object
+
+      properties:
+        token:
+          type: string
+          example: 6adfvasdfsfhetsgfs
+
+    offer:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        price:
+          type: number
+          example: 100000
+
+        title:
+          type: string
+          example: Квартира в центре города
+
+        propertyType:
+          type: string
+          enum:
+            - Apartment
+            - House
+            - Room
+            - Hotel
+          example: Apartment
+
+        isFavorite:
+          type: boolean
+          example: true
+
+        postDate:
+          type: string
+          format: date-time
+          example: 2021-07-01T12:00:00Z
+
+        city:
+          type: string
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+          example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
+
+        isPremium:
+          type: boolean
+          example: true
+
+        rating:
+          type: number
+          example: 4.5
+
+        commentsCount:
+          type: number
+          example: 5
+
+    detailedOffer:
+      type: object
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        price:
+          type: number
+          example: 100000
+
+        title:
+          type: string
+          example: Квартира в центре города
+
+        description:
+          type: string
+          example: Квартира в центре города с видом на Эйфелеву башню
+
+        propertyType:
+          type: string
+          enum:
+            - Apartment
+            - House
+            - Room
+            - Hotel
+          example: Apartment
+
+        isFavorite:
+          type: boolean
+          example: true
+
+        postDate:
+          type: string
+          format: date-time
+          example: 2021-07-01T12:00:00Z
+
+        city:
+          type: string
+          enum:
+            - Paris
+            - Cologne
+            - Brussels
+            - Amsterdam
+            - Hamburg
+            - Dusseldorf
+          example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
+
+        propertyImages:
+          type: array
+          items:
+            type: string
+          example: [image1.jpg, image2.jpg, image3.jpg, image4.jpg, image5.jpg, image6.jpg]
+
+        roomsNumber:
+          type: number
+          example: 3
+
+        guestsNumber:
+          type: number
+          example: 5
+
+        amenities:
+          type: array
+          enum:
+            - Breakfast
+            - AirConditioning
+            - LaptopFriendly
+            - BabySeat
+            - Washer
+            - Towels
+            - Fridge
+          items:
+            type: string
+          example: [Breakfast, AirConditioning, LaptopFriendly, BabySeat, Washer, Towels, Fridge]
+
+        isPremium:
+          type: boolean
+          example: true
+
+        rating:
+          type: number
+          example: 4.5
+
+        commentsCount:
+          type: number
+          example: 5
+
+        userId:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        coordinates:
+          type: object
+          properties:
+            latitude:
+              type: number
+              example: 48.8566
+            longitude:
+              type: number
+              example: 2.3522
+
+    comment:
+      type: object
+
+      properties:
+        text:
+          type: string
+          example: Отличное предложение!
+
+        rating:
+          type: number
+          example: 5
+
+        date:
+          type: string
+          format: date-time
+          example: 2021-07-01T12:00:00Z
+
+        userId:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
