@@ -4,7 +4,6 @@ import { Component } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import { SortType } from '../../types/index.js';
 import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 
@@ -58,8 +57,7 @@ export class DefaultOfferService implements OfferService {
 
   public async findPremium(count: number): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find()
-      .sort({ createdAt: SortType.Down })
+      .find({isPremium: true})
       .limit(count)
       .populate(['userId'])
       .exec();
