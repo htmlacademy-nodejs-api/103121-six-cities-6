@@ -21,17 +21,25 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
-  public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+  public async findById(offerId: string, userId: string): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .findById(offerId)
       .populate(['userId'])
+      .aggregate([
+        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
+        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
+      ])
       .exec();
   }
 
-  public async find(): Promise<DocumentType<OfferEntity>[]> {
+  public async find(userId: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .find()
       .populate(['userId'])
+      .aggregate([
+        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
+        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
+      ])
       .exec();
   }
 
@@ -41,10 +49,14 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
+  public async updateById(offerId: string, userId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel
       .findByIdAndUpdate(offerId, dto, {new: true})
       .populate(['userId'])
+      .aggregate([
+        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
+        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
+      ])
       .exec();
   }
 

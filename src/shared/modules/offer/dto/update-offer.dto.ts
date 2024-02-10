@@ -10,7 +10,6 @@ export class UpdateOfferDto {
   public previewImage?: string;
   public propertyImages?: string[];
   public isPremium?: boolean;
-  public isFavorite?: boolean;
   public rating?: number;
   public propertyType?: Property;
   public roomsNumber?: number;
