@@ -2,11 +2,9 @@ import { inject, injectable } from 'inversify';
 import { Logger } from '../shared/libs/logger/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
 import { Component } from '../shared/types/index.js';
-import { OfferService } from '../shared/modules/offer/offer-service.interface.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 
-// const offerId = '65c77215f0f35071038b9710';
 
 @injectable()
 export class RestApplication {
@@ -14,7 +12,6 @@ export class RestApplication {
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
     @inject(Component.DatabaseClient) private readonly databaseClient: DatabaseClient,
-    @inject(Component.OfferService) private readonly offerService: OfferService,
   ) {}
 
   private async initDb(): Promise<void> {
@@ -36,9 +33,5 @@ export class RestApplication {
     this.logger.info('Init database…');
     await this.initDb();
     this.logger.info('Init database completed');
-
-    this.offerService.findFavorite(5).then((offer) => {
-      console.log(offer);
-    });
   }
 }
