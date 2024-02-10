@@ -29,7 +29,7 @@ export class DefaultUserService implements UserService {
   }
 
   public async findById(id: string): Promise<DocumentType<UserEntity> | null> {
-    return this.userModel.findOne({id});
+    return this.userModel.findById(id);
   }
 
   public async findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
@@ -45,6 +45,18 @@ export class DefaultUserService implements UserService {
   public async updateById(userId: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
     return this.userModel
       .findByIdAndUpdate(userId, dto, { new: true })
+      .exec();
+  }
+
+  public async addFavorite(userId: string, offerId: string): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, { $push: { favorites: offerId } }, { new: true })
+      .exec();
+  }
+
+  public async removeFavorite(userId: string, offerId: string): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, { $pull: { favorites: offerId } }, { new: true })
       .exec();
   }
 }

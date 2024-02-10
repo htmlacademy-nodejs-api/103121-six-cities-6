@@ -5,7 +5,29 @@ import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { OfferEntity } from './offer.entity.js';
+import { Types } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
+
+const userId = '65bf3f34400ed55a3f2e4589';
+
+const favoriteOffersPipeline = [
+  { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'users' } },
+  { $addFields: { user: { $arrayElemAt: [ '$users', 0 ] } } },
+  { $lookup:
+    {
+      from: 'users',
+      let: { userId: new Types.ObjectId(userId) },
+      pipeline: [
+        { $match: { $expr: { $eq: ['$_id', '$$userId'] } } }
+      ],
+      as: 'specificUser'
+    }
+  },
+  { $addFields: { specificUser: { $arrayElemAt: [ '$specificUser', 0 ] } } },
+  { $addFields: { 'specificUser.favorites': { $ifNull: [ '$specificUser.favorites', [] ] } } },
+  { $addFields: { isFavorite: { $in: [ '$_id', '$specificUser.favorites' ] } } },
+  { $unset: ['users', 'userId', 'specificUser'] },
+];
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -21,25 +43,20 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
-  public async findById(offerId: string, userId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .findById(offerId)
-      .populate(['userId'])
+  public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+    const result = await this.offerModel
       .aggregate([
-        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
-        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
+        { $match: { _id: new Types.ObjectId(offerId) } },
+        ...favoriteOffersPipeline,
       ])
       .exec();
+
+    return result?.[0];
   }
 
-  public async find(userId: string): Promise<DocumentType<OfferEntity>[]> {
+  public async find(): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find()
-      .populate(['userId'])
-      .aggregate([
-        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
-        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
-      ])
+      .aggregate([...favoriteOffersPipeline])
       .exec();
   }
 
@@ -49,15 +66,22 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async updateById(offerId: string, userId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .findByIdAndUpdate(offerId, dto, {new: true})
-      .populate(['userId'])
+  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
+    const result = await this.offerModel
       .aggregate([
-        { $lookup: { from: 'users', localField: '_id', foreignField: 'favorites', as: 'users' } },
-        { $addFields: { isFavorite: { $in: [userId, '$users._id'] } } }
+        { $match: { _id: new Types.ObjectId(offerId) } },
+        ...favoriteOffersPipeline,
       ])
       .exec();
+
+    const offer = result?.[0];
+
+    if (offer) {
+      await this.offerModel.updateOne({ _id: offer._id }, dto).exec();
+      return this.offerModel.findById(offer._id).exec();
+    }
+
+    return null;
   }
 
   public async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {
@@ -69,9 +93,21 @@ export class DefaultOfferService implements OfferService {
 
   public async findPremium(count: number): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find({isPremium: true})
+      .aggregate([
+        { $match: { isPremium: true } },
+        ...favoriteOffersPipeline,
+      ])
       .limit(count)
-      .populate(['userId'])
+      .exec();
+  }
+
+  public async findFavorite(count: number): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .aggregate([
+        ...favoriteOffersPipeline,
+        { $match: { isFavorite: true } },
+      ])
+      .limit(count)
       .exec();
   }
 }
