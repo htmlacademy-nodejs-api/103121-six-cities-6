@@ -26,7 +26,22 @@ const favoriteOffersPipeline = [
   { $addFields: { specificUser: { $arrayElemAt: [ '$specificUser', 0 ] } } },
   { $addFields: { 'specificUser.favorites': { $ifNull: [ '$specificUser.favorites', [] ] } } },
   { $addFields: { isFavorite: { $in: [ '$_id', '$specificUser.favorites' ] } } },
-  { $unset: ['users', 'userId', 'specificUser'] },
+  { $lookup: { from: 'comments', localField: '_id', foreignField: 'offerId', as: 'comments' } },
+  { $addFields: { commentCount: { $size: '$comments' }, commentRating: { $sum: '$comments.rating' } } },
+  { $addFields:
+    {
+      rating: {
+        $cond: {
+          if: {
+            $eq: ['$commentCount', 0]
+          },
+          then: 0,
+          else: { $divide: ['$commentRating', '$commentCount'] }
+        }
+      }
+    }
+  },
+  { $unset: ['users', 'userId', 'specificUser', 'comments', 'commentRating'] },
 ];
 
 @injectable()
