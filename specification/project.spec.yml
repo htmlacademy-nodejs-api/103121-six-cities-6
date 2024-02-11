@@ -420,6 +420,13 @@ components:
           type: string
           example: qwerty
 
+        userType:
+          type: string
+          enum:
+            - Common
+            - Pro
+          example: Common
+
     authUser:
       type: object
 
