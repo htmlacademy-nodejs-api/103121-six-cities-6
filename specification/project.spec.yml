@@ -336,10 +336,10 @@ paths:
         "404":
           description: Премиум-предложения не найдены.
 
-  /user/favorites:
+  /offers/favorites:
     get:
       tags:
-        - users
+        - offers
       summary: Получение списка избранных предложений.
       description: Возвращает список избранных предложений пользователя.
 
@@ -356,6 +356,7 @@ paths:
         "404":
           description: Избранные предложения не найдены.
 
+  /user/favorites:
     post:
       tags:
         - users
