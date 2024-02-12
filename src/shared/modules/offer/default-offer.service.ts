@@ -33,10 +33,10 @@ const favoriteOffersPipeline = [
       rating: {
         $cond: {
           if: {
-            $eq: ['$commentCount', 0]
+            $eq: ['$commentsCount', 0]
           },
           then: 0,
-          else: { $divide: ['$commentRating', '$commentCount'] }
+          else: { $divide: ['$commentRating', '$commentsCount'] }
         }
       }
     }
