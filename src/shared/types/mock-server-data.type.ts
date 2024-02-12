@@ -6,7 +6,6 @@ export type MockServerData = {
   previewImages: string[];
   propertyImages: string[][];
   isPremium: boolean[];
-  ratings: number[];
   propertyTypes: string[];
   roomsNumbers: number[];
   guestsNumbers: number[];
