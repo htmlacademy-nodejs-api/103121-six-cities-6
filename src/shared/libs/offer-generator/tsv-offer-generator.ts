@@ -9,10 +9,6 @@ const MAX_PRICE = 100000;
 const FIRST_WEEK_DAY = 1;
 const LAST_WEEK_DAY = 7;
 
-const MIN_RATING = 1;
-const MAX_RATING = 5;
-const RATING_DECIMALS = 1;
-
 const MIN_ROOMS_NUMBER = 1;
 const MAX_ROOMS_NUMBER = 8;
 
@@ -41,7 +37,6 @@ export class TSVOfferGenerator implements OfferGenerator {
     const previewImage = getRandomItem<string>(this.mockData.previewImages);
     const propertyImages = getRandomItem<string[]>(this.mockData.propertyImages).join(',');
     const isPremium = generateRandomBoolean().toString();
-    const rating = generateRandomValue(MIN_RATING, MAX_RATING, RATING_DECIMALS).toString();
     const propertyType = getRandomItem<string>(this.mockData.propertyTypes);
     const roomsNumber = generateRandomValue(MIN_ROOMS_NUMBER, MAX_ROOMS_NUMBER).toString();
     const guestsNumber = generateRandomValue(MIN_GUESTS_NUMBER, MAX_GUESTS_NUMBER).toString();
@@ -68,7 +63,6 @@ export class TSVOfferGenerator implements OfferGenerator {
       previewImage,
       propertyImages,
       isPremium,
-      rating,
       propertyType,
       roomsNumber,
       guestsNumber,

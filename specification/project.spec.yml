@@ -301,7 +301,7 @@ paths:
         "401":
           description: Пользователь не авторизован. Комментарий не добавлен.
 
-  /offers/${city}/premium:
+  /offers/premium:
     get:
       tags:
         - offers
@@ -309,10 +309,9 @@ paths:
       description: Возвращает список премиум-предложений по городу.
 
       parameters:
-        - name: city
-          in: path
-          required: true
-          description: Город.
+        - in: query
+          name: city
+          description: Город
           schema:
             type: string
             enum:
@@ -322,6 +321,7 @@ paths:
               - Amsterdam
               - Hamburg
               - Dusseldorf
+          required: true
 
       responses:
         "200":
@@ -332,14 +332,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/offer'
-
         "404":
           description: Премиум-предложения не найдены.
 
-  /user/favorites:
+  /offers/favorites:
     get:
       tags:
-        - users
+        - offers
       summary: Получение списка избранных предложений.
       description: Возвращает список избранных предложений пользователя.
 
@@ -356,6 +355,7 @@ paths:
         "404":
           description: Избранные предложения не найдены.
 
+  /user/favorites:
     post:
       tags:
         - users
@@ -367,7 +367,7 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              $ref: '#/components/schemas/favoriteOffer'
         required: true
 
       responses:
@@ -388,7 +388,7 @@ paths:
         content:
           application/json:
             schema:
-              type: string
+              $ref: '#/components/schemas/favoriteOffer'
         required: true
 
       responses:
@@ -419,6 +419,13 @@ components:
         password:
           type: string
           example: qwerty
+
+        userType:
+          type: string
+          enum:
+            - Common
+            - Pro
+          example: Common
 
     authUser:
       type: object
@@ -653,6 +660,14 @@ components:
           example: 2021-07-01T12:00:00Z
 
         userId:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+    favoriteOffer:
+      type: object
+
+      properties:
+        offerId:
           type: string
           example: 6329c3d6a04ab1061c6425ea
 

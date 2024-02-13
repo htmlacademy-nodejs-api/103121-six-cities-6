@@ -7,6 +7,8 @@ import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 
+const userId = '65bf3f34400ed55a3f2e4589';
+
 @injectable()
 export class DefaultUserService implements UserService {
   constructor(
@@ -42,19 +44,19 @@ export class DefaultUserService implements UserService {
     return this.create(dto, salt);
   }
 
-  public async updateById(userId: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
+  public async updateById(dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
     return this.userModel
       .findByIdAndUpdate(userId, dto, { new: true })
       .exec();
   }
 
-  public async addFavorite(userId: string, offerId: string): Promise<DocumentType<UserEntity> | null> {
+  public async addFavorite(offerId: string): Promise<DocumentType<UserEntity> | null> {
     return this.userModel
       .findByIdAndUpdate(userId, { $push: { favorites: offerId } }, { new: true })
       .exec();
   }
 
-  public async removeFavorite(userId: string, offerId: string): Promise<DocumentType<UserEntity> | null> {
+  public async removeFavorite(offerId: string): Promise<DocumentType<UserEntity> | null> {
     return this.userModel
       .findByIdAndUpdate(userId, { $pull: { favorites: offerId } }, { new: true })
       .exec();
