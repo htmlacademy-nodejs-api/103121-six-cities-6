@@ -10,6 +10,7 @@ import { Config, RestSchema } from '../../libs/config/index.js';
 import { fillDTO } from '../../helpers/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
 import { LoginUserRequest } from './login-user-request.type.js';
+import { AddRemoveFavoriteRequest } from './add-remove-favorite-request.type.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -23,6 +24,8 @@ export class UserController extends BaseController {
 
     this.addRoute({ path: '/register', method: HttpMethod.Post, handler: this.create });
     this.addRoute({ path: '/login', method: HttpMethod.Post, handler: this.login });
+    this.addRoute({ path: '/favorites', method: HttpMethod.Post, handler: this.addFavorite });
+    this.addRoute({ path: '/favorites', method: HttpMethod.Delete, handler: this.removeFavorite });
   }
 
   public async create(
@@ -48,6 +51,18 @@ export class UserController extends BaseController {
     res: Response,
   ): Promise<void> {
     await this.userService.findByEmail(body.email);
+    this.ok(res, null);
+  }
+
+  public async addFavorite(req: AddRemoveFavoriteRequest, res: Response) {
+    const { body: { offerId } } = req;
+    await this.userService.addFavorite(offerId);
+    this.ok(res, fillDTO(UserRdo, null));
+  }
+
+  public async removeFavorite(req: AddRemoveFavoriteRequest, res: Response) {
+    const { body: { offerId } } = req;
+    await this.userService.removeFavorite(offerId);
     this.ok(res, null);
   }
 }
