@@ -106,23 +106,21 @@ export class DefaultOfferService implements OfferService {
       }}).exec();
   }
 
-  public async findPremium(count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findPremium(city: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
-        { $match: { isPremium: true } },
+        { $match: { city, isPremium: true } },
         ...favoriteOffersPipeline,
       ])
-      .limit(count)
       .exec();
   }
 
-  public async findFavorite(count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
         ...favoriteOffersPipeline,
         { $match: { isFavorite: true } },
       ])
-      .limit(count)
       .exec();
   }
 }

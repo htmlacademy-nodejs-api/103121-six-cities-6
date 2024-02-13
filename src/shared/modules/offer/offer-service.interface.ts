@@ -10,6 +10,6 @@ export interface OfferService {
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
-  findPremium(count: number): Promise<DocumentType<OfferEntity>[]>;
-  findFavorite(count: number): Promise<DocumentType<OfferEntity>[]>;
+  findPremium(city: string): Promise<DocumentType<OfferEntity>[]>;
+  findFavorite(): Promise<DocumentType<OfferEntity>[]>;
 }

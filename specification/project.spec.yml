@@ -301,7 +301,7 @@ paths:
         "401":
           description: Пользователь не авторизован. Комментарий не добавлен.
 
-  /offers/${city}/premium:
+  /offers/premium:
     get:
       tags:
         - offers
@@ -309,10 +309,9 @@ paths:
       description: Возвращает список премиум-предложений по городу.
 
       parameters:
-        - name: city
-          in: path
-          required: true
-          description: Город.
+        - in: query
+          name: city
+          description: Город
           schema:
             type: string
             enum:
@@ -322,6 +321,7 @@ paths:
               - Amsterdam
               - Hamburg
               - Dusseldorf
+          required: true
 
       responses:
         "200":
@@ -332,7 +332,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/offer'
-
         "404":
           description: Премиум-предложения не найдены.
 
