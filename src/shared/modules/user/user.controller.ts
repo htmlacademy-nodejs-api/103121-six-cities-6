@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { Response } from 'express';
-import { BaseController, HttpMethod } from '../../libs/rest/index.js';
+import { StatusCodes } from 'http-status-codes';
+import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { CreateUserRequest } from './create-user-request.type.js';
@@ -26,8 +27,18 @@ export class UserController extends BaseController {
 
   public async create(
     { body }: CreateUserRequest,
-    res: Response
+    res: Response,
   ): Promise<void> {
+    const existsUser = await this.userService.findByEmail(body.email);
+
+    if (existsUser) {
+      throw new HttpError(
+        StatusCodes.CONFLICT,
+        `User with email «${body.email}» exists.`,
+        'UserController'
+      );
+    }
+
     const result = await this.userService.create(body, this.configService.get('SALT'));
     this.created(res, fillDTO(UserRdo, result));
   }
