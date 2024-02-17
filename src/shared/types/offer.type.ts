@@ -18,6 +18,5 @@ export type Offer = {
   price: number;
   amenities: Amenity[];
   user: User;
-  commentsCount: number;
   coordinates: Coordinates;
 }

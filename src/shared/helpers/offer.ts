@@ -19,7 +19,6 @@ export function createOffer(offerData: string): Offer {
     avatar,
     password,
     userType,
-    commentsCount,
     latitude,
     longitude
   ] = offerData.replace('\n', '').split('\t');
@@ -51,7 +50,6 @@ export function createOffer(offerData: string): Offer {
     price: Number.parseInt(price, 10),
     amenities: amenities.split(',').map((item) => Amenity[item as keyof typeof Amenity]),
     user,
-    commentsCount: Number.parseInt(commentsCount, 10),
     coordinates,
   };
 }

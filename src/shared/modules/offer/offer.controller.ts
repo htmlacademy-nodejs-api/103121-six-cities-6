@@ -1,6 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
-import { BaseController, HttpMethod, ValidateObjectIdMiddleware } from '../../libs/rest/index.js';
+import {
+  BaseController,
+  HttpMethod,
+  ValidateObjectIdMiddleware,
+  ValidateDtoMiddleware
+} from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { City, Component } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
@@ -14,7 +19,12 @@ import { StatusCodes } from 'http-status-codes';
 import { GetOfferRequestType } from './get-offer-request.type.js';
 import { UpdateOfferRequestType } from './update-offer-request.type.js';
 import { CommentRdo, CommentService } from '../comment/index.js';
-import { DEFAULT_COMMENTS_COUNT, DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.constant.js';
+import {
+  DEFAULT_COMMENTS_COUNT,
+  DEFAULT_OFFER_COUNT,
+  DEFAULT_PREMIUM_OFFER_COUNT
+} from './offer.constant.js';
+import { CreateOfferDto } from './dto/create-offer.dto.js';
 
 @injectable()
 export class OfferController extends BaseController {
@@ -28,7 +38,12 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for OfferController…');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateOfferDto)]
+    });
     this.addRoute({ path: '/premium', method: HttpMethod.Get, handler: this.getPremiumByCity });
     this.addRoute({ path: '/favorites', method: HttpMethod.Get, handler: this.getFavorites });
     this.addRoute({
