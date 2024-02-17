@@ -70,3 +70,8 @@ Content-Type: application/json
 }
 
 ###
+
+## Список комментариев к объявлению
+GET http://localhost:4000/offers/65c9b7c501b5b635b451ca6e/comments HTTP/1.1
+
+###

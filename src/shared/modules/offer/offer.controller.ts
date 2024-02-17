@@ -6,18 +6,21 @@ import { City, Component } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { fillDTO } from '../../helpers/index.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
+import { ParamOfferId } from './types/param-offerid.type.js';
 import { CreateOfferRequestType } from './create-offer-request.type.js';
 import { DetailedOfferRdo } from './rdo/detailed-offer.rdo.js';
 import { HttpError } from '../../libs/rest/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { GetOfferRequestType } from './get-offer-request.type.js';
 import { UpdateOfferRequestType } from './update-offer-request.type.js';
+import { CommentRdo, CommentService } from '../comment/index.js';
 
 @injectable()
 export class OfferController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.OfferService) private readonly offerService: OfferService,
+    @inject(Component.CommentService) private readonly commentService: CommentService
   ) {
     super(logger);
 
@@ -30,6 +33,7 @@ export class OfferController extends BaseController {
     this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.getDetailed });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.delete });
     this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.update });
+    this.addRoute({ path: '/:offerId/comments', method: HttpMethod.Get, handler: this.getComments });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
@@ -85,6 +89,8 @@ export class OfferController extends BaseController {
 
     const offer = await this.offerService.deleteById(offerId);
     if (offer) {
+      await this.commentService.deleteByOfferId(offerId);
+
       return this.ok(res, null);
     }
 
@@ -108,5 +114,18 @@ export class OfferController extends BaseController {
       `Can't update offer ${offerId}.`,
       'OfferController'
     );
+  }
+
+  public async getComments({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
+    if (!await this.offerService.exists(params.offerId)) {
+      throw new HttpError(
+        StatusCodes.NOT_FOUND,
+        `Offer with id ${params.offerId} not found.`,
+        'OfferController'
+      );
+    }
+
+    const comments = await this.commentService.findByOfferId(params.offerId);
+    this.ok(res, fillDTO(CommentRdo, comments));
   }
 }
