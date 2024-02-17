@@ -69,9 +69,10 @@ export class DefaultOfferService implements OfferService {
     return result?.[0];
   }
 
-  public async find(): Promise<DocumentType<OfferEntity>[]> {
+  public async find(count: number): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([...favoriteOffersPipeline])
+      .limit(count)
       .exec();
   }
 
@@ -106,12 +107,13 @@ export class DefaultOfferService implements OfferService {
       }}).exec();
   }
 
-  public async findPremium(city: string): Promise<DocumentType<OfferEntity>[]> {
+  public async findPremium(city: string, count: number): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
         { $match: { city, isPremium: true } },
         ...favoriteOffersPipeline,
       ])
+      .limit(count)
       .exec();
   }
 
