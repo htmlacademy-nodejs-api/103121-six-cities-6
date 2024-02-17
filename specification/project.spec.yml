@@ -151,7 +151,7 @@ paths:
         "404":
           description: Предложение не найдено.
 
-    put:
+    patch:
       tags:
         - offers
       summary: Редактирование предложения.

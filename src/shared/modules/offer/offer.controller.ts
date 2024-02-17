@@ -27,9 +27,9 @@ export class OfferController extends BaseController {
     this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
     this.addRoute({ path: '/premium', method: HttpMethod.Get, handler: this.getPremiumByCity });
     this.addRoute({ path: '/favorites', method: HttpMethod.Get, handler: this.getFavorites });
-    this.addRoute({ path: '/:id', method: HttpMethod.Get, handler: this.getDetailed });
-    this.addRoute({ path: '/:id', method: HttpMethod.Delete, handler: this.delete });
-    this.addRoute({ path: '/:id', method: HttpMethod.Put, handler: this.update });
+    this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.getDetailed });
+    this.addRoute({ path: '/:offerId', method: HttpMethod.Delete, handler: this.delete });
+    this.addRoute({ path: '/:offerId', method: HttpMethod.Patch, handler: this.update });
   }
 
   public async index(_req: Request, res: Response): Promise<void> {
@@ -39,22 +39,23 @@ export class OfferController extends BaseController {
   }
 
   public async create(req: CreateOfferRequestType, res: Response): Promise<void> {
-    const { body} = req;
+    const { body } = req;
 
     const result = await this.offerService.create(body);
     this.created(res, fillDTO(DetailedOfferRdo, result));
   }
 
   public async getDetailed(req: GetOfferRequestType, res: Response) {
-    const { params: { id }} = req;
-    const offer = await this.offerService.findById(id);
+    const { params: { offerId }} = req;
+    const offer = await this.offerService.findById(offerId);
+    console.log(offer);
     if (offer) {
       return this.ok(res, fillDTO(DetailedOfferRdo, offer));
     }
 
     throw new HttpError(
       StatusCodes.NOT_FOUND,
-      `Offer with id ${id} not found.`,
+      `Offer with id ${offerId} not found.`,
       'OfferController'
     );
   }
@@ -80,32 +81,31 @@ export class OfferController extends BaseController {
   }
 
   public async delete(req: GetOfferRequestType, res: Response) {
-    const { params: { id }} = req;
+    const { params: { offerId }} = req;
 
-    const offer = await this.offerService.deleteById(id);
+    const offer = await this.offerService.deleteById(offerId);
     if (offer) {
       return this.ok(res, null);
     }
 
     throw new HttpError(
       StatusCodes.BAD_REQUEST,
-      `No data or access for deleting offer ${id}.`,
+      `No data or access for deleting offer ${offerId}.`,
       'OfferController'
     );
   }
 
   public async update(req: UpdateOfferRequestType, res: Response) {
-    const { params: { id }, body } = req;
+    const { params: { offerId }, body } = req;
 
-
-    if (id) {
-      const result = await this.offerService.updateById(id, body);
+    if (offerId) {
+      const result = await this.offerService.updateById(offerId, body);
       return this.ok(res, fillDTO(DetailedOfferRdo, result));
     }
 
     throw new HttpError(
       StatusCodes.BAD_REQUEST,
-      `Can't update offer ${id}.`,
+      `Can't update offer ${offerId}.`,
       'OfferController'
     );
   }
