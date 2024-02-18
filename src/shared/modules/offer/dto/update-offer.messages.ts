@@ -1,20 +1,21 @@
-export const CreateOfferValidationMessage = {
+export const UpdateOfferMessage = {
   title: {
-    minLength: 'Minimum title length must be 10',
-    maxLength: 'Maximum title length must be 100',
+    minLength: 'minimum title length is 10',
+    maxLength: 'maximum title length is 100'
   },
   description: {
-    minLength: 'Minimum description length must be 20',
-    maxLength: 'Maximum description length must be 1024',
+    minLength: 'minimum description length is 20',
+    maxLength: 'maximum description length is 1024',
   },
   postDate: {
-    invalidFormat: 'postDate must be a valid ISO date',
+    invalidFormat: 'postData must be a valid ISO date',
   },
   city: {
     invalid: 'City must be a valid city',
   },
   previewImage: {
-    maxLength: 'Too long for previewImage',
+    invalidFormat: 'image is required',
+    maxLength: 'too long for field image. Maximum length is 256'
   },
   propertyImages: {
     invalidFormat: 'Field propertyImages must be an array',
@@ -37,20 +38,12 @@ export const CreateOfferValidationMessage = {
     maxValue: 'Maximum price is 10',
   },
   price: {
-    invalidFormat: 'Price must be an integer',
-    minValue: 'Minimum price is 100',
-    maxValue: 'Maximum price is 200000',
+    invalidFormat: 'price must be an integer',
+    minValue: 'minimum price is 100',
+    maxValue: 'maximum price is 20000'
   },
   amenities: {
     invalidFormat: 'Field amenities must be an array',
     invalid: 'Amenity must be a valid amenity',
-  },
-  userId: {
-    invalidId: 'userId field must be a valid id',
-  },
-  coordinates: {
-    invalidFormat: 'Field coordinates must be an object',
-    invalidLatitude: 'Latitude must be a valid number',
-    invalidLongitude: 'Longitude must be a valid number',
   },
 } as const;

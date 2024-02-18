@@ -47,13 +47,13 @@ export class CreateOfferDto {
   public propertyType: Property;
 
   @IsInt({ message: CreateOfferValidationMessage.roomsNumber.invalidFormat })
-  @Min(1, { message: CreateOfferValidationMessage.price.minValue })
-  @Max(8, { message: CreateOfferValidationMessage.price.maxValue })
+  @Min(1, { message: CreateOfferValidationMessage.roomsNumber.minValue })
+  @Max(8, { message: CreateOfferValidationMessage.roomsNumber.maxValue })
   public roomsNumber: number;
 
   @IsInt({ message: CreateOfferValidationMessage.guestsNumber.invalidFormat })
-  @Min(1, { message: CreateOfferValidationMessage.price.minValue })
-  @Max(10, { message: CreateOfferValidationMessage.price.maxValue })
+  @Min(1, { message: CreateOfferValidationMessage.guestsNumber.minValue })
+  @Max(10, { message: CreateOfferValidationMessage.guestsNumber.maxValue })
   public guestsNumber: number;
 
   @IsInt({ message: CreateOfferValidationMessage.price.invalidFormat })
