@@ -3,9 +3,6 @@ import { UserType } from '../../../types/user-type.enum.js';
 
 export class UserRdo {
   @Expose()
-  public id: string;
-
-  @Expose()
   public name: string;
 
   @Expose()

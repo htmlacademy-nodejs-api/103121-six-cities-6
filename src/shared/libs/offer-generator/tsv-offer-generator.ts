@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
 import { OfferGenerator } from './offer-generator.interface.js';
 import { MockServerData } from '../../types/index.js';
-import { generateRandomBoolean, generateRandomString, generateRandomValue, getRandomItem, getRandomItems } from '../../helpers/index.js';
+import {
+  generateRandomBoolean,
+  generateRandomString,
+  generateRandomValue,
+  getRandomItem,
+  getRandomItems
+} from '../../helpers/index.js';
 
 const MIN_PRICE = 100;
 const MAX_PRICE = 100000;
@@ -17,9 +23,6 @@ const MAX_GUESTS_NUMBER = 8;
 
 const MIN_PASSWORD_LENGTH = 6;
 const MAX_PASSWORD_LENGTH = 12;
-
-const MIN_COMMENTS_COUNT = 0;
-const MAX_COMMENTS_COUNT = 100;
 
 const MIN_LATITUDE = -90;
 const MAX_LATITUDE = 90;
@@ -47,7 +50,6 @@ export class TSVOfferGenerator implements OfferGenerator {
     const avatar = getRandomItem(this.mockData.avatars);
     const password = generateRandomString(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
     const userType = getRandomItem(this.mockData.userTypes);
-    const commentsCount = generateRandomValue(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT).toString();
     const latitude = generateRandomValue(MIN_LATITUDE, MAX_LATITUDE, COORDINATES_DECIMALS).toString();
     const longitude = generateRandomValue(MIN_LONGITUDE, MAX_LONGITUDE, COORDINATES_DECIMALS).toString();
 
@@ -73,7 +75,6 @@ export class TSVOfferGenerator implements OfferGenerator {
       avatar,
       password,
       userType,
-      commentsCount,
       latitude,
       longitude,
     ].join('\t');

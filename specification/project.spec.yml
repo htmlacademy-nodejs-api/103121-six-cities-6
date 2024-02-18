@@ -151,7 +151,7 @@ paths:
         "404":
           description: Предложение не найдено.
 
-    put:
+    patch:
       tags:
         - offers
       summary: Редактирование предложения.
@@ -211,6 +211,34 @@ paths:
         "409":
           description: Пользователь не является владельцем предложения.
 
+  /offers/{offerId}/comments:
+    get:
+      tags:
+        - offers
+      summary: Получение списка комментариев к предложению.
+      description: Возвращает список комментариев к предложению.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          description: ID предложения.
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: Список комментариев.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/comment'
+
+        "404":
+          description: Комментарии не найдены.
+
   /offers/create:
     post:
       tags:
@@ -240,54 +268,19 @@ paths:
         "401":
           description: Пользователь не авторизован.
 
-  /offers/{offerId}/comments:
-    get:
-      tags:
-        - comments
-      summary: Получение списка комментариев.
-      description: Возвращает список комментариев к предложению.
-
-      parameters:
-        - name: offerId
-          in: path
-          required: true
-          description: ID предложения.
-          schema:
-            type: string
-
-      responses:
-        "200":
-          description: Список комментариев.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/comment'
-
-        "404":
-          description: Комментарии не найдены.
-
+  /comments:
     post:
       tags:
         - comments
       summary: Добавление комментария.
       description: Добавляет комментарий к предложению.
 
-      parameters:
-        - name: offerId
-          in: path
-          required: true
-          description: ID предложения.
-          schema:
-            type: string
-
       requestBody:
         description: Информация для создания нового комментария.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/comment'
+              $ref: '#/components/schemas/createComment'
         required: true
 
       responses:
@@ -641,6 +634,26 @@ components:
             longitude:
               type: number
               example: 2.3522
+
+    createComment:
+      type: object
+
+      properties:
+        text:
+          type: string
+          example: Отличное предложение!
+
+        offerId:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        rating:
+          type: number
+          example: 5
+
+        userId:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
 
     comment:
       type: object
