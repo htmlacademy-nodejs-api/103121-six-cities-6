@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 import {
   BaseController,
+  DocumentExistsMiddleware,
   HttpMethod,
   ValidateObjectIdMiddleware,
   ValidateDtoMiddleware
@@ -51,13 +52,19 @@ export class OfferController extends BaseController {
       path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.getDetailed,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+      ]
     });
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Delete,
       handler: this.delete,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
+      ]
     });
     this.addRoute({
       path: '/:offerId',
@@ -66,13 +73,17 @@ export class OfferController extends BaseController {
       middlewares: [
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
     });
     this.addRoute({
       path: '/:offerId/comments',
       method: HttpMethod.Get,
       handler: this.getComments,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')]
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+      ]
     });
   }
 
@@ -92,15 +103,7 @@ export class OfferController extends BaseController {
   public async getDetailed(req: GetOfferRequestType, res: Response) {
     const { params: { offerId }} = req;
     const offer = await this.offerService.findById(offerId);
-    if (offer) {
-      return this.ok(res, fillDTO(DetailedOfferRdo, offer));
-    }
-
-    throw new HttpError(
-      StatusCodes.NOT_FOUND,
-      `Offer with id ${offerId} not found.`,
-      'OfferController'
-    );
+    return this.ok(res, fillDTO(DetailedOfferRdo, offer));
   }
 
   public async getPremiumByCity(req: GetOfferRequestType, res: Response) {
@@ -129,44 +132,19 @@ export class OfferController extends BaseController {
   public async delete(req: GetOfferRequestType, res: Response) {
     const { params: { offerId }} = req;
 
-    const offer = await this.offerService.deleteById(offerId);
-    if (offer) {
-      await this.commentService.deleteByOfferId(offerId);
-
-      return this.ok(res, null);
-    }
-
-    throw new HttpError(
-      StatusCodes.BAD_REQUEST,
-      `No data or access for deleting offer ${offerId}.`,
-      'OfferController'
-    );
+    await this.offerService.deleteById(offerId);
+    await this.commentService.deleteByOfferId(offerId);
+    return this.ok(res, null);
   }
 
   public async update(req: UpdateOfferRequestType, res: Response) {
     const { params: { offerId }, body } = req;
 
-    if (offerId) {
-      const result = await this.offerService.updateById(offerId, body);
-      return this.ok(res, fillDTO(DetailedOfferRdo, result));
-    }
-
-    throw new HttpError(
-      StatusCodes.BAD_REQUEST,
-      `Can't update offer ${offerId}.`,
-      'OfferController'
-    );
+    const result = await this.offerService.updateById(offerId, body);
+    return this.ok(res, fillDTO(DetailedOfferRdo, result));
   }
 
   public async getComments({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
-    if (!await this.offerService.exists(params.offerId)) {
-      throw new HttpError(
-        StatusCodes.NOT_FOUND,
-        `Offer with id ${params.offerId} not found.`,
-        'OfferController'
-      );
-    }
-
     const comments = await this.commentService.findByOfferId(params.offerId, DEFAULT_COMMENTS_COUNT);
     this.ok(res, fillDTO(CommentRdo, comments));
   }

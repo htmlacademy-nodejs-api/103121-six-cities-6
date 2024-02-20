@@ -391,6 +391,44 @@ paths:
         "404":
           description: Предложение не найдено.
 
+  /user/{id}/avatar:
+    post:
+      tags:
+        - users
+      summary: Загрузка аватара пользователя.
+      description: Загружает аватар пользователя.
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID пользователя.
+          schema:
+            type: string
+
+      requestBody:
+        description: Аватар пользователя.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+        required: true
+
+      responses:
+        "201":
+          description: Аватар загружен.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        "404":
+          description: Пользователь не найден.
+
 components:
   schemas:
     createUser:

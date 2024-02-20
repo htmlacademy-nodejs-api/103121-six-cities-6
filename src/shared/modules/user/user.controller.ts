@@ -1,11 +1,12 @@
 import { inject, injectable } from 'inversify';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import {
   BaseController,
   HttpError,
-  HttpMethod,
-  ValidateDtoMiddleware
+  HttpMethod, UploadFileMiddleware,
+  ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
@@ -43,6 +44,15 @@ export class UserController extends BaseController {
     });
     this.addRoute({ path: '/favorites', method: HttpMethod.Post, handler: this.addFavorite });
     this.addRoute({ path: '/favorites', method: HttpMethod.Delete, handler: this.removeFavorite });
+    this.addRoute({
+      path: '/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new UploadFileMiddleware(this.configService.get('UPLOAD_DIRECTORY'), 'avatar'),
+      ]
+    });
   }
 
   public async create(
@@ -81,5 +91,11 @@ export class UserController extends BaseController {
     const { body: { offerId } } = req;
     await this.userService.removeFavorite(offerId);
     this.ok(res, null);
+  }
+
+  public async uploadAvatar(req: Request, res: Response) {
+    this.created(res, {
+      filepath: req.file?.path
+    });
   }
 }
