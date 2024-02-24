@@ -7,6 +7,7 @@ import {
   HttpMethod, UploadFileMiddleware,
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
+  PrivateRouteMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
@@ -45,7 +46,12 @@ export class UserController extends BaseController {
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
     });
-    this.addRoute({ path: '/favorites', method: HttpMethod.Post, handler: this.addFavorite });
+    this.addRoute({
+      path: '/favorites',
+      method: HttpMethod.Post,
+      handler: this.addFavorite,
+      middlewares: [new PrivateRouteMiddleware()]
+    });
     this.addRoute({ path: '/favorites', method: HttpMethod.Delete, handler: this.removeFavorite });
     this.addRoute({
       path: '/:userId/avatar',
@@ -95,14 +101,14 @@ export class UserController extends BaseController {
   }
 
   public async addFavorite(req: AddRemoveFavoriteRequest, res: Response) {
-    const { body: { offerId } } = req;
-    await this.userService.addFavorite(offerId);
+    const { body: { offerId }, tokenPayload } = req;
+    await this.userService.addFavorite(offerId, tokenPayload.id);
     this.ok(res, fillDTO(UserRdo, null));
   }
 
   public async removeFavorite(req: AddRemoveFavoriteRequest, res: Response) {
-    const { body: { offerId } } = req;
-    await this.userService.removeFavorite(offerId);
+    const { body: { offerId }, tokenPayload } = req;
+    await this.userService.removeFavorite(offerId, tokenPayload.id);
     this.ok(res, null);
   }
 
