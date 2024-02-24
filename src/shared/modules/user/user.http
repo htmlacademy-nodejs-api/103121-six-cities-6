@@ -60,4 +60,10 @@ Content-Type: image/png
 < /Users/artem.trikashnyi/Documents/Projects/103121-six-cities-6/markup/img/amsterdam@2x.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-##
+###
+
+## Проверить токен пользователя
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVjOGY3ZTEwYzcxMTZmNTMwODQ5MDFkIiwiaWF0IjoxNzA4NzU5NzkwLCJleHAiOjE3MDg5MzI1OTB9.WFWrZ-atL0V7tF-o7g0gEx87JrNWzt3GQhdwvWQyYQM
+
+###
