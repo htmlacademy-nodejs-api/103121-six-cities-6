@@ -41,7 +41,7 @@ const favoriteOffersPipeline = [
       }
     }
   },
-  { $unset: ['users', 'userId', 'specificUser', 'comments', 'commentRating'] },
+  { $unset: ['users', 'specificUser', 'comments', 'commentRating'] },
 ];
 
 @injectable()
@@ -83,18 +83,18 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
-    const result = await this.offerModel
-      .aggregate([
-        { $match: { _id: new Types.ObjectId(offerId) } },
-        ...favoriteOffersPipeline,
-      ])
-      .exec();
+    const result = await this.offerModel.findById(offerId).exec();
 
-    const offer = result?.[0];
+    if (result) {
+      await this.offerModel.updateOne({ _id: offerId }, dto).exec();
+      const offer = await this.offerModel
+        .aggregate([
+          { $match: { _id: new Types.ObjectId(offerId) } },
+          ...favoriteOffersPipeline,
+        ])
+        .exec();
 
-    if (offer) {
-      await this.offerModel.updateOne({ _id: offer._id }, dto).exec();
-      return this.offerModel.findById(offer._id).exec();
+      return offer?.[0];
     }
 
     return null;

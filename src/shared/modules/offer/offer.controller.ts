@@ -5,7 +5,8 @@ import {
   DocumentExistsMiddleware,
   HttpMethod,
   ValidateObjectIdMiddleware,
-  ValidateDtoMiddleware
+  ValidateDtoMiddleware,
+  PrivateRouteMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { City, Component } from '../../types/index.js';
@@ -44,7 +45,10 @@ export class OfferController extends BaseController {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateOfferDto)]
+      middlewares: [
+        new PrivateRouteMiddleware(),
+        new ValidateDtoMiddleware(CreateOfferDto)
+      ]
     });
     this.addRoute({ path: '/premium', method: HttpMethod.Get, handler: this.getPremiumByCity });
     this.addRoute({ path: '/favorites', method: HttpMethod.Get, handler: this.getFavorites });
@@ -62,6 +66,7 @@ export class OfferController extends BaseController {
       method: HttpMethod.Delete,
       handler: this.delete,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
       ]
@@ -71,6 +76,7 @@ export class OfferController extends BaseController {
       method: HttpMethod.Patch,
       handler: this.update,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
         new ValidateDtoMiddleware(UpdateOfferDto),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId')
@@ -94,9 +100,9 @@ export class OfferController extends BaseController {
   }
 
   public async create(req: CreateOfferRequestType, res: Response): Promise<void> {
-    const { body } = req;
+    const { body, tokenPayload } = req;
 
-    const result = await this.offerService.create(body);
+    const result = await this.offerService.create({ ...body, userId: tokenPayload.id });
     this.created(res, fillDTO(DetailedOfferRdo, result));
   }
 
@@ -130,7 +136,16 @@ export class OfferController extends BaseController {
   }
 
   public async delete(req: GetOfferRequestType, res: Response) {
-    const { params: { offerId }} = req;
+    const { params: { offerId }, tokenPayload } = req;
+
+    const offer = await this.offerService.findById(offerId);
+    if (offer?.userId.toString() !== tokenPayload.id) {
+      throw new HttpError(
+        StatusCodes.FORBIDDEN,
+        'You are not allowed to delete this offer.',
+        'OfferController'
+      );
+    }
 
     await this.offerService.deleteById(offerId);
     await this.commentService.deleteByOfferId(offerId);
@@ -138,7 +153,16 @@ export class OfferController extends BaseController {
   }
 
   public async update(req: UpdateOfferRequestType, res: Response) {
-    const { params: { offerId }, body } = req;
+    const { params: { offerId }, body, tokenPayload } = req;
+
+    const offer = await this.offerService.findById(offerId);
+    if (offer?.userId.toString() !== tokenPayload.id) {
+      throw new HttpError(
+        StatusCodes.FORBIDDEN,
+        'You are not allowed to update this offer.',
+        'OfferController'
+      );
+    }
 
     const result = await this.offerService.updateById(offerId, body);
     return this.ok(res, fillDTO(DetailedOfferRdo, result));
