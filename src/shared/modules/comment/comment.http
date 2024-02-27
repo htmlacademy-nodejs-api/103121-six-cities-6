@@ -3,12 +3,12 @@
 
 POST http://localhost:4000/comments HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVjOGY3ZTEwYzcxMTZmNTMwODQ5MDFkIiwiaWF0IjoxNzA4NzU5NzkwLCJleHAiOjE3MDg5MzI1OTB9.WFWrZ-atL0V7tF-o7g0gEx87JrNWzt3GQhdwvWQyYQM
 
 {
   "text": "Как обстоят дела с коробками? Фирменная упаковка сохранена?",
   "offerId": "65c9b7c501b5b635b451ca6e",
-  "rating": 3,
-  "userId": "65d062f17220a6e29950b9da"
+  "rating": 3
 }
 
 ###

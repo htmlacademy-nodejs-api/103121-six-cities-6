@@ -8,9 +8,7 @@ import { OfferEntity } from './offer.entity.js';
 import { Types } from 'mongoose';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 
-const userId = '65bf3f34400ed55a3f2e4589';
-
-const favoriteOffersPipeline = [
+const makeOffersPipeline = (userId: string) => ([
   { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'users' } },
   { $addFields: { user: { $arrayElemAt: [ '$users', 0 ] } } },
   { $lookup:
@@ -41,8 +39,8 @@ const favoriteOffersPipeline = [
       }
     }
   },
-  { $unset: ['users', 'userId', 'specificUser', 'comments', 'commentRating'] },
-];
+  { $unset: ['users', 'specificUser', 'comments', 'commentRating'] },
+]);
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -58,20 +56,20 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
-  public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
+  public async findById(offerId: string, userId: string): Promise<DocumentType<OfferEntity> | null> {
     const result = await this.offerModel
       .aggregate([
         { $match: { _id: new Types.ObjectId(offerId) } },
-        ...favoriteOffersPipeline,
+        ...makeOffersPipeline(userId),
       ])
       .exec();
 
     return result?.[0];
   }
 
-  public async find(count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async find(count: number, userId: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .aggregate([...favoriteOffersPipeline])
+      .aggregate([...makeOffersPipeline(userId)])
       .limit(count)
       .exec();
   }
@@ -82,19 +80,19 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
-    const result = await this.offerModel
-      .aggregate([
-        { $match: { _id: new Types.ObjectId(offerId) } },
-        ...favoriteOffersPipeline,
-      ])
-      .exec();
+  public async updateById(offerId: string, dto: UpdateOfferDto, userId: string): Promise<DocumentType<OfferEntity> | null> {
+    const result = await this.offerModel.findById(offerId).exec();
 
-    const offer = result?.[0];
+    if (result) {
+      await this.offerModel.updateOne({ _id: offerId }, dto).exec();
+      const offer = await this.offerModel
+        .aggregate([
+          { $match: { _id: new Types.ObjectId(offerId) } },
+          ...makeOffersPipeline(userId),
+        ])
+        .exec();
 
-    if (offer) {
-      await this.offerModel.updateOne({ _id: offer._id }, dto).exec();
-      return this.offerModel.findById(offer._id).exec();
+      return offer?.[0];
     }
 
     return null;
@@ -107,20 +105,20 @@ export class DefaultOfferService implements OfferService {
       }}).exec();
   }
 
-  public async findPremium(city: string, count: number): Promise<DocumentType<OfferEntity>[]> {
+  public async findPremium(city: string, count: number, userId: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
         { $match: { city, isPremium: true } },
-        ...favoriteOffersPipeline,
+        ...makeOffersPipeline(userId),
       ])
       .limit(count)
       .exec();
   }
 
-  public async findFavorite(): Promise<DocumentType<OfferEntity>[]> {
+  public async findFavorite(userId: string): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
-        ...favoriteOffersPipeline,
+        ...makeOffersPipeline(userId),
         { $match: { isFavorite: true } },
       ])
       .exec();
