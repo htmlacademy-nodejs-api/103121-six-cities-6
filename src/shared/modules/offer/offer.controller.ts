@@ -10,7 +10,7 @@ import {
   ValidUserMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
-import { City, Component } from '../../types/index.js';
+import { City, Component, ControllerPath } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { fillDTO } from '../../helpers/index.js';
 import { OfferRdo } from './rdo/offer.rdo.js';
@@ -48,7 +48,7 @@ export class OfferController extends BaseController {
       handler: this.create,
       middlewares: [
         new PrivateRouteMiddleware(),
-        new ValidateDtoMiddleware(CreateOfferDto)
+        new ValidateDtoMiddleware(CreateOfferDto, ControllerPath.Offer)
       ]
     });
     this.addRoute({
@@ -90,7 +90,7 @@ export class OfferController extends BaseController {
       middlewares: [
         new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('offerId'),
-        new ValidateDtoMiddleware(UpdateOfferDto),
+        new ValidateDtoMiddleware(UpdateOfferDto, ControllerPath.Offer),
         new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
         new ValidUserMiddleware(this.offerService),
       ]

@@ -10,7 +10,7 @@ import {
   PrivateRouteMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
-import { Component } from '../../types/index.js';
+import { Component, ControllerPath } from '../../types/index.js';
 import { CreateUserRequest } from './create-user-request.type.js';
 import { UserService } from './user-service.interface.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
@@ -38,13 +38,13 @@ export class UserController extends BaseController {
       path: '/register',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto, ControllerPath.User)]
     });
     this.addRoute({
       path: '/login',
       method: HttpMethod.Post,
       handler: this.login,
-      middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto, ControllerPath.User)]
     });
     this.addRoute({
       path: '/favorites',
