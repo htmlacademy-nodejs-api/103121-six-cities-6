@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import express, { Express } from 'express';
 import { Logger } from '../shared/libs/logger/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
+import cors from 'cors';
 import { Component } from '../shared/types/index.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { getMongoURI, getFullServerPath } from '../shared/helpers/index.js';
@@ -53,6 +54,7 @@ export class RestApplication {
       express.static(this.config.get('STATIC_DIRECTORY'))
     );
     this.server.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
+    this.server.use(cors());
   }
 
   private async initExceptionFilters() {
