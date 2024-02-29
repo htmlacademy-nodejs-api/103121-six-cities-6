@@ -2,6 +2,7 @@ import { defaultClasses, getModelForClass, modelOptions, prop, Ref } from '@type
 import { OfferEntity } from '../offer/index.js';
 import { UserEntity } from '../user/index.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface CommentEntity extends defaultClasses.Base {}
 
 @modelOptions({
@@ -10,6 +11,7 @@ export interface CommentEntity extends defaultClasses.Base {}
   }
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class CommentEntity extends defaultClasses.TimeStamps {
   @prop({ trim: true, required: true })
   public text: string;

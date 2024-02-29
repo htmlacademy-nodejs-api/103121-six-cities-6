@@ -5,6 +5,7 @@ import { Property } from '../../types/property-type.enum.js';
 import { Amenity } from '../../types/amenity-type.enum.js';
 import { Coordinates } from '../../types/coordinates.type.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface OfferEntity extends defaultClasses.Base {}
 
 @modelOptions({
@@ -13,6 +14,7 @@ export interface OfferEntity extends defaultClasses.Base {}
   }
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ trim: true, required: true })
   public title!: string;
