@@ -3,6 +3,7 @@ import { User, UserType } from '../../types/index.js';
 import { createSHA256 } from '../../helpers/index.js';
 import { OfferEntity } from '../offer/index.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface UserEntity extends defaultClasses.Base {}
 
 @modelOptions({
@@ -11,49 +12,45 @@ export interface UserEntity extends defaultClasses.Base {}
   }
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({
     required: true,
-    minlength: [1, 'Min length for name is 1'],
-    maxlength: [15, 'Max length for name is 15'],
     trim: true,
   })
-  public name!: string;
+  public name: string;
 
   @prop({
     unique: true,
     required: true,
-    match: [/^([\w-\\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'Email is incorrect'],
     trim: true,
   })
-  public email!: string;
+  public email: string;
 
   @prop({
     required: false,
     default: '',
-    match: [/^(.*\.(jpg|png))$/, 'Avatar must be a JPG or PNG image']
   })
   public avatar: string;
 
   @prop({
     required: true,
-    minlength: [6, 'Min length for password is 6'],
     trim: true,
   })
-  public password!: string;
+  public password: string;
 
   @prop({
     required: true,
     type: () => String,
     enum: UserType,
   })
-  public userType!: UserType;
+  public userType: UserType;
 
   @prop({
     default: [],
     ref: () => UserEntity,
   })
-  public favorites!: Ref<OfferEntity>[];
+  public favorites: Ref<OfferEntity>[];
 
   constructor(userData: User) {
     super();

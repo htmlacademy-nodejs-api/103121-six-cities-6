@@ -2,28 +2,27 @@
 ## Получить список предложений
 GET http://localhost:4000/offers HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVjOGY3ZTEwYzcxMTZmNTMwODQ5MDFkIiwiaWF0IjoxNzA4NzU5NzkwLCJleHAiOjE3MDg5MzI1OTB9.WFWrZ-atL0V7tF-o7g0gEx87JrNWzt3GQhdwvWQyYQM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1lb3dtZW93QG1haWwucnUiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVlMGM3MDMxYTIzYWRiZGEyYmQ0MTA1IiwiaWF0IjoxNzA5MjMyMjM2LCJleHAiOjE3MDk0MDUwMzZ9.hGsOJETTYM8VFEhHa6L0WNtkFKubY0kkHRAeQ4pNCDw
 
 ###
 
 ## Добавить новое предложение
 POST http://localhost:4000/offers HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVjOGY3ZTEwYzcxMTZmNTMwODQ5MDFkIiwiaWF0IjoxNzA4NzU5NzkwLCJleHAiOjE3MDg5MzI1OTB9.WFWrZ-atL0V7tF-o7g0gEx87JrNWzt3GQhdwvWQyYQM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImZhc2RmYWRzZkBtYWlsLnJ1IiwibmFtZSI6IkphY2siLCJpZCI6IjY1ZDE5MzViOTg3MmY3OTQ5M2JmZGNkYiIsImlhdCI6MTcwOTEzOTM3MSwiZXhwIjoxNzA5MzEyMTcxfQ.Z2pEcO4ZAkma455ipwb6UQ17XyGXO-Vd1s3QqhtBIhM
 
 {
-  "title": "Квартира в Париже",
+  "title": "Квартира в центре Парижа",
   "description": "Квартира в центре Парижа, 3 комнаты, 2 ванные комнаты, 2 балкона, 1 парковочное место",
-  "city": "Париж",
+  "city": "Paris",
   "postDate": "2021-07-01",
-  "previewImage": "https://example.com/paris.jpg",
   "propertyImages": [
     "https://example.com/paris/1.jpg",
     "https://example.com/paris/2.jpg",
     "https://example.com/paris/3.jpg"
   ],
   "isPremium": true,
-  "propertyType": "apartment",
+  "propertyType": "Apartment",
   "roomsNumber": 3,
   "guestsNumber": 6,
   "price": 150,
@@ -39,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZ
 ###
 
 ## Получить детальную информацию о предложении
-GET http://localhost:4000/offers/65c77215f0f35071038b970c HTTP/1.1
+GET http://localhost:4000/offers/65e0bb79c1ce2f9ecf577d77 HTTP/1.1
 Content-Type: application/json
 
 ###
@@ -47,7 +46,7 @@ Content-Type: application/json
 ## Получить список предложений по городу (на примере Парижа)
 GET http://localhost:4000/offers/premium?city=Paris HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVjOGY3ZTEwYzcxMTZmNTMwODQ5MDFkIiwiaWF0IjoxNzA4NzU5NzkwLCJleHAiOjE3MDg5MzI1OTB9.WFWrZ-atL0V7tF-o7g0gEx87JrNWzt3GQhdwvWQyYQM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1lb3dtZW93QG1haWwucnUiLCJuYW1lIjoiSmFjayIsImlkIjoiNjVlMGM3MDMxYTIzYWRiZGEyYmQ0MTA1IiwiaWF0IjoxNzA5MjMyMjM2LCJleHAiOjE3MDk0MDUwMzZ9.hGsOJETTYM8VFEhHa6L0WNtkFKubY0kkHRAeQ4pNCDw
 
 ###
 
@@ -78,5 +77,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZ
 
 ## Список комментариев к объявлению
 GET http://localhost:4000/offers/65c9b7c501b5b635b451ca6e/comments HTTP/1.1
+
+###
+
+## Загрузить изображение для объявления
+POST http://localhost:4000/offers/65258514a30fc6ef77c0edf7/image HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJmaXJzdG5hbWUiOiJKYWNrIiwibGFzdG5hbWUiOiJUb3JyYW5jZSIsImlkIjoiNjUyNTk2ZjdlMGE2OTEyZDI5MzA1ZGQ2IiwiaWF0IjoxNjk4Njc3ODAyLCJleHAiOjE2OTg4NTA2MDJ9.HDAdzzjP9Cnfrl9c_TdIzXdjAls2dboO_FU-bScOwmU
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="screen.png"
+Content-Type: image/png
+
+< /Users/artem.trikashnyi/Documents/Projects/103121-six-cities-6/markup/img/amsterdam@2x.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###

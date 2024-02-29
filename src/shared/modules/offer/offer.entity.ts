@@ -5,6 +5,7 @@ import { Property } from '../../types/property-type.enum.js';
 import { Amenity } from '../../types/amenity-type.enum.js';
 import { Coordinates } from '../../types/coordinates.type.js';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface OfferEntity extends defaultClasses.Base {}
 
 @modelOptions({
@@ -13,74 +14,72 @@ export interface OfferEntity extends defaultClasses.Base {}
   }
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ trim: true, required: true })
-  public title!: string;
+  public title: string;
 
   @prop({trim: true, required: true})
-  public description!: string;
+  public description: string;
 
   @prop({required: true})
-  public postDate!: Date;
+  public postDate: Date;
 
   @prop({
     type: () => String,
     enum: City,
     required: true
   })
-  public city!: City;
-
-  @prop({required: true})
-  public previewImage!: string;
+  public city: City;
 
   @prop({
     type: () => [String],
     default: [],
     required: true
   })
-  public propertyImages!: string[];
+  public propertyImages: string[];
 
   @prop({required: true})
-  public isPremium!: boolean;
+  public isPremium: boolean;
 
   @prop({
     type: () => String,
     enum: Property,
     required: true
   })
-  public propertyType!: Property;
+  public propertyType: Property;
 
   @prop({required: true})
-  public roomsNumber!: number;
+  public roomsNumber: number;
 
   @prop({required: true})
-  public guestsNumber!: number;
+  public guestsNumber: number;
 
   @prop({required: true})
-  public price!: number;
+  public price: number;
 
   @prop({
     default: [],
     type: () => [String],
     required: true,
   })
-  public amenities!: Amenity[];
+  public amenities: Amenity[];
 
   @prop({default: 0})
-  public commentsCount!: number;
+  public commentsCount: number;
 
   @prop({
     ref: UserEntity,
     required: true
   })
-  public userId!: Ref<UserEntity>;
+  public userId: Ref<UserEntity>;
 
   @prop({
     required: true,
     type: () => Coordinates,
     _id: false
   })
-  public coordinates!: Coordinates;
+  public coordinates: Coordinates;
 }
 
 export const OfferModel = getModelForClass(OfferEntity);

@@ -10,7 +10,7 @@ import {
   PrivateRouteMiddleware,
 } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
-import { Component } from '../../types/index.js';
+import { Component, ControllerPath } from '../../types/index.js';
 import { CreateUserRequest } from './create-user-request.type.js';
 import { UserService } from './user-service.interface.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
@@ -22,6 +22,7 @@ import { CreateUserDto } from './dto/create-user.dto.js';
 import { LoginUserDto } from './dto/login-user.dto.js';
 import { AuthService } from '../auth/index.js';
 import { LoggedUserRdo } from './rdo/logged-user.rdo.js';
+import { UploadUserAvatarRdo } from './rdo/upload-user-avatar.rdo.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -38,13 +39,13 @@ export class UserController extends BaseController {
       path: '/register',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto, ControllerPath.User)]
     });
     this.addRoute({
       path: '/login',
       method: HttpMethod.Post,
       handler: this.login,
-      middlewares: [new ValidateDtoMiddleware(LoginUserDto)]
+      middlewares: [new ValidateDtoMiddleware(LoginUserDto, ControllerPath.User)]
     });
     this.addRoute({
       path: '/favorites',
@@ -93,11 +94,8 @@ export class UserController extends BaseController {
   ): Promise<void> {
     const user = await this.authService.verify(body);
     const token = await this.authService.authenticate(user);
-    const responseData = fillDTO(LoggedUserRdo, {
-      email: user.email,
-      token,
-    });
-    this.ok(res, responseData);
+    const responseData = fillDTO(LoggedUserRdo, user);
+    this.ok(res, Object.assign(responseData, { token }));
   }
 
   public async addFavorite(req: AddRemoveFavoriteRequest, res: Response) {
@@ -112,16 +110,17 @@ export class UserController extends BaseController {
     this.ok(res, null);
   }
 
-  public async uploadAvatar(req: Request, res: Response) {
-    this.created(res, {
-      filepath: req.file?.path
-    });
+  public async uploadAvatar({ params, file }: Request, res: Response) {
+    const { userId } = params;
+    const uploadFile = { avatar: file?.filename };
+    await this.userService.updateById(userId, uploadFile);
+    this.created(res, fillDTO(UploadUserAvatarRdo, { filepath: uploadFile.avatar }));
   }
 
   public async checkAuthenticate({ tokenPayload: { email }}: Request, res: Response) {
     const foundedUser = await this.userService.findByEmail(email);
 
-    if (! foundedUser) {
+    if (!foundedUser) {
       throw new HttpError(
         StatusCodes.UNAUTHORIZED,
         'Unauthorized',
