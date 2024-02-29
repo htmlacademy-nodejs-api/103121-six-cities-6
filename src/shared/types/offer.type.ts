@@ -9,7 +9,6 @@ export type Offer = {
   description: string;
   postDate: Date;
   city: City;
-  previewImage: string;
   propertyImages: string[];
   isPremium: boolean;
   propertyType: Property;

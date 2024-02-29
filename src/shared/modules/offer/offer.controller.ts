@@ -135,7 +135,7 @@ export class OfferController extends BaseController {
 
   public async getDetailed(req: GetOfferRequestType, res: Response) {
     const { params: { offerId }, tokenPayload } = req;
-    const offer = await this.offerService.findById(offerId, tokenPayload.id);
+    const offer = await this.offerService.findById(offerId, tokenPayload?.id);
     return this.ok(res, fillDTO(DetailedOfferRdo, offer));
   }
 

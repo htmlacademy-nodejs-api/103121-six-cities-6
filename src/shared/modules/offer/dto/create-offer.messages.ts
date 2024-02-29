@@ -13,9 +13,6 @@ export const CreateOfferValidationMessage = {
   city: {
     invalid: 'City must be a valid city',
   },
-  previewImage: {
-    maxLength: 'Too long for previewImage',
-  },
   propertyImages: {
     invalidFormat: 'Field propertyImages must be an array',
     maxLength: 'Too long for propertyImages',
