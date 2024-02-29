@@ -6,9 +6,9 @@ Content-Type: application/json
 
 {
   "name": "Jack",
-  "email": "meowmeow@mail.ru",
+  "email": "meowmdeow@mail.ru",
   "password": "shining",
-  "userType": "pro"
+  "userType": "Pro"
 }
 
 ###
