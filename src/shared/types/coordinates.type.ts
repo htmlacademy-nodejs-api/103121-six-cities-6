@@ -2,8 +2,8 @@ import { prop } from '@typegoose/typegoose';
 
 export class Coordinates {
   @prop({ required: true })
-    latitude!: number;
+    latitude: number;
 
   @prop({ required: true })
-    longitude!: number;
+    longitude: number;
 }
