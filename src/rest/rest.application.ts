@@ -10,7 +10,6 @@ import { Controller, ExceptionFilter, ParseTokenMiddleware } from '../shared/lib
 import { ControllerPath } from '../shared/types/controller-path.enum.js';
 import { STATIC_FILES_ROUTE, STATIC_UPLOAD_ROUTE } from './rest.constant.js';
 
-
 @injectable()
 export class RestApplication {
   private readonly server: Express;

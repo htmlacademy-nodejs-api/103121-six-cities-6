@@ -21,8 +21,6 @@ export class HttpErrorExceptionFilter implements ExceptionFilter {
       return next(error);
     }
 
-    console.log('here');
-
     this.logger.error(`[HttpErrorException]: ${req.path} # ${error.message}`, error);
 
     res
