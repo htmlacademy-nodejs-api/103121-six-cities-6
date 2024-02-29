@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Jack",
-  "email": "fasdfadsf@mail.ru",
+  "email": "gggg@mail.ru",
   "avatar": "torrance.png",
   "password": "shining",
   "userType": "pro"

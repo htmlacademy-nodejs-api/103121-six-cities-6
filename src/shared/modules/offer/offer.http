@@ -12,7 +12,6 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImZhc2RmYWRzZkBtYWlsLnJ1IiwibmFtZSI6IkphY2siLCJpZCI6IjY1ZDE5MzViOTg3MmY3OTQ5M2JmZGNkYiIsImlhdCI6MTcwOTEzOTM3MSwiZXhwIjoxNzA5MzEyMTcxfQ.Z2pEcO4ZAkma455ipwb6UQ17XyGXO-Vd1s3QqhtBIhM
 
 {
-  "title": "Квартира в Париже",
   "description": "Квартира в центре Парижа, 3 комнаты, 2 ванные комнаты, 2 балкона, 1 парковочное место",
   "city": "Париж",
   "postDate": "2021-07-01",
