@@ -1,5 +1,9 @@
+import CreateOfferDto from '../../dto/offer/create-offer.dto';
 import CreateUserDto from '../../dto/user/create-user.dto';
 import { UserRegister } from '../../types/types';
+import { NewOffer } from '../../types/types';
+import { Amenity, City, Property } from '../../dto/offer/offer-types';
+import { capitalize } from '../../utils';
 
 export const adaptSignupToServer =
   (user: UserRegister): CreateUserDto => ({
@@ -16,3 +20,20 @@ export const adaptAvatarToServer =
 
     return formData;
   };
+
+export const adaptCreateOfferToServer =
+  (offer: NewOffer): CreateOfferDto => ({
+    price: offer.price,
+    title: offer.title,
+    postDate: new Date(),
+    isPremium: offer.isPremium,
+    city: City[offer.city.name as keyof typeof City],
+    previewImage: offer.previewImage,
+    description: offer.description,
+    coordinates: offer.location,
+    propertyType: Property[capitalize(offer.type) as keyof typeof Property],
+    roomsNumber: offer.bedrooms,
+    amenities: offer.goods.map((item) => Amenity[item as keyof typeof Amenity]),
+    propertyImages: offer.images,
+    guestsNumber: offer.maxAdults,
+  });

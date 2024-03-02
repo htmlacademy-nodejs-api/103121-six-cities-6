@@ -39,6 +39,7 @@ const makeOffersPipeline = (userId: string) => ([
       }
     }
   },
+  { $addFields: { id: { $toString: '$_id' } }},
   { $unset: ['users', 'specificUser', 'comments', 'commentRating'] },
 ]);
 

@@ -7,6 +7,9 @@ import { Coordinates } from '../../../types/coordinates.type.js';
 
 export class DetailedOfferRdo {
   @Expose()
+  public id: string;
+
+  @Expose()
   public title: string;
 
   @Expose()

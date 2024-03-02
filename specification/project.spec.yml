@@ -524,11 +524,11 @@ components:
         propertyType:
           type: string
           enum:
-            - Apartment
-            - House
-            - Room
-            - Hotel
-          example: Apartment
+            - apartment
+            - house
+            - room
+            - hotel
+          example: apartment
 
         isFavorite:
           type: boolean
@@ -549,6 +549,10 @@ components:
             - Hamburg
             - Dusseldorf
           example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
 
         isPremium:
           type: boolean
@@ -585,11 +589,11 @@ components:
         propertyType:
           type: string
           enum:
-            - Apartment
-            - House
-            - Room
-            - Hotel
-          example: Apartment
+            - apartment
+            - house
+            - room
+            - hotel
+          example: apartment
 
         isFavorite:
           type: boolean
@@ -610,6 +614,10 @@ components:
             - Hamburg
             - Dusseldorf
           example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
 
         propertyImages:
           type: array

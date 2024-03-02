@@ -18,10 +18,10 @@ export enum City {
 }
 
 export enum Property {
-  Apartment = 'Apartment',
-  House = 'House',
-  Room = 'Room',
-  Hotel = 'Hotel',
+  Apartment = 'apartment',
+  House = 'house',
+  Room = 'room',
+  Hotel = 'hotel',
 }
 
 export class Coordinates {

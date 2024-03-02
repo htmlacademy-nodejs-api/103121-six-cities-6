@@ -16,13 +16,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImZhc2RmYWRzZkBtYWlsLnJ1I
   "description": "Квартира в центре Парижа, 3 комнаты, 2 ванные комнаты, 2 балкона, 1 парковочное место",
   "city": "Paris",
   "postDate": "2021-07-01",
+  "previewImage": "https://example.com/paris.jpg",
   "propertyImages": [
     "https://example.com/paris/1.jpg",
     "https://example.com/paris/2.jpg",
     "https://example.com/paris/3.jpg"
   ],
   "isPremium": true,
-  "propertyType": "Apartment",
+  "propertyType": "apartment",
   "roomsNumber": 3,
   "guestsNumber": 6,
   "price": 150,

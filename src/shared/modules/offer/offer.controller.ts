@@ -14,7 +14,6 @@ import { Logger } from '../../libs/logger/index.js';
 import { City, Component, ControllerPath } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { fillDTO } from '../../helpers/index.js';
-import { OfferRdo } from './rdo/offer.rdo.js';
 import { ParamOfferId } from './types/param-offerid.type.js';
 import { CreateOfferRequestType } from './create-offer-request.type.js';
 import { DetailedOfferRdo } from './rdo/detailed-offer.rdo.js';
@@ -122,7 +121,7 @@ export class OfferController extends BaseController {
 
   public async index({ tokenPayload }: Request, res: Response): Promise<void> {
     const offers = await this.offerService.find(DEFAULT_OFFER_COUNT, tokenPayload.id);
-    const responseData = fillDTO(OfferRdo, offers);
+    const responseData = fillDTO(DetailedOfferRdo, offers);
     this.ok(res, responseData);
   }
 
@@ -148,7 +147,7 @@ export class OfferController extends BaseController {
         DEFAULT_PREMIUM_OFFER_COUNT,
         tokenPayload.id
       );
-      return this.ok(res, fillDTO(OfferRdo, result));
+      return this.ok(res, fillDTO(DetailedOfferRdo, result));
     }
 
     throw new HttpError(
@@ -160,7 +159,7 @@ export class OfferController extends BaseController {
 
   public async getFavorites({ tokenPayload }: Request, res: Response) {
     const result = await this.offerService.findFavorite(tokenPayload.id);
-    return this.ok(res, fillDTO(OfferRdo, result));
+    return this.ok(res, fillDTO(DetailedOfferRdo, result));
   }
 
   public async delete(req: GetOfferRequestType, res: Response) {
