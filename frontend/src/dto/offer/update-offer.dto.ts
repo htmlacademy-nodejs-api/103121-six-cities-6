@@ -1,4 +1,4 @@
-import { Amenity, City, Property } from './offer-types';
+import { City, Property } from './offer-types';
 
 export default class UpdateOfferDto {
   public title?: string;
@@ -23,5 +23,5 @@ export default class UpdateOfferDto {
 
   public price?: number;
 
-  public amenities?: Amenity[];
+  public amenities?: string[];
 }

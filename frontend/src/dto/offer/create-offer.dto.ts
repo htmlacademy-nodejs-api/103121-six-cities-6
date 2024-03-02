@@ -1,4 +1,4 @@
-import { Amenity, City, Property, Coordinates } from './offer-types';
+import { City, Property, Coordinates } from './offer-types';
 
 export default class CreateOfferDto {
   public title!: string;
@@ -23,7 +23,7 @@ export default class CreateOfferDto {
 
   public price!: number;
 
-  public amenities!: Amenity[];
+  public amenities!: string[];
 
   public coordinates!: Coordinates;
 }

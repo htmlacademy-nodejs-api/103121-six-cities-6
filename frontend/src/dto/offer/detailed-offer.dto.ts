@@ -1,4 +1,4 @@
-import { Amenity, City, Property, Coordinates } from './offer-types';
+import { City, Property, Coordinates } from './offer-types';
 import UserWithTokenDto from '../user/user-with-token.dto';
 
 export class DetailedOfferDto {
@@ -32,7 +32,7 @@ export class DetailedOfferDto {
 
   public guestsNumber!: number;
 
-  public amenities!: Amenity[];
+  public amenities!: string[];
 
   public user!: UserWithTokenDto;
 

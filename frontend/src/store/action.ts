@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { UserAuth, User, Offer, Comment, CommentAuth, FavoriteAuth, UserRegister, NewOffer } from '../types/types';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 import { Token } from '../utils';
-import { adaptCreateCommentToServer, adaptCreateOfferToServer } from '../utils/adapters/adaptersToServer';
+import { adaptCreateCommentToServer, adaptCreateOfferToServer, adaptUpdateOfferToServer } from '../utils/adapters/adaptersToServer';
 import { adaptAvatarToServer, adaptSignupToServer } from '../utils/adapters/adaptersToServer';
 import UserDto from '../dto/user/user.dto';
 import UserWithTokenDto from '../dto/user/user-with-token.dto';
@@ -87,10 +87,10 @@ export const editOffer = createAsyncThunk<Offer, Offer, { extra: Extra }>(
   Action.EDIT_OFFER,
   async (offer, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.patch<Offer>(`${ApiRoute.Offers}/${offer.id}`, offer);
+    const { data } = await api.patch<DetailedOfferDto>(`${ApiRoute.Offers}/${offer.id}`, adaptUpdateOfferToServer(offer));
     history.push(`${AppRoute.Property}/${data.id}`);
 
-    return data;
+    return adaptOfferToClient(data);
   });
 
 export const deleteOffer = createAsyncThunk<void, string, { extra: Extra }>(
@@ -105,9 +105,9 @@ export const fetchPremiumOffers = createAsyncThunk<Offer[], string, { extra: Ext
   Action.FETCH_PREMIUM_OFFERS,
   async (cityName, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Offer[]>(`${ApiRoute.Premium}?city=${cityName}`);
+    const { data } = await api.get<DetailedOfferDto[]>(`${ApiRoute.Premium}?city=${cityName}`);
 
-    return data;
+    return adaptOffersToClient(data);
   });
 
 export const fetchComments = createAsyncThunk<Comment[], Offer['id'], { extra: Extra }>(
