@@ -1,9 +1,10 @@
 import CreateOfferDto from '../../dto/offer/create-offer.dto';
 import CreateUserDto from '../../dto/user/create-user.dto';
-import { UserRegister } from '../../types/types';
+import { Comment, UserRegister } from '../../types/types';
 import { NewOffer } from '../../types/types';
 import { Amenity, City, Property } from '../../dto/offer/offer-types';
 import { capitalize } from '../../utils';
+import CreateCommentDto from '../../dto/comment/create-comment.dto';
 
 export const adaptSignupToServer =
   (user: UserRegister): CreateUserDto => ({
@@ -36,4 +37,11 @@ export const adaptCreateOfferToServer =
     amenities: offer.goods.map((item) => Amenity[item as keyof typeof Amenity]),
     propertyImages: offer.images,
     guestsNumber: offer.maxAdults,
+  });
+
+export const adaptCreateCommentToServer =
+  (comment: Omit<Comment, 'date' | 'user'>): CreateCommentDto => ({
+    offerId: comment.id,
+    text: comment.comment,
+    rating: comment.rating,
   });

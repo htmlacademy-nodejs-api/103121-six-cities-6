@@ -63,6 +63,15 @@ export const adaptOffersToClient =
         host: adaptLoginToClient(offer.user),
       }));
 
+export const adaptCommentToClient =
+  (comment: CommentDto): Comment => ({
+    id: comment.id,
+    comment: comment.text,
+    date: comment.postDate,
+    rating: comment.rating,
+    user: adaptLoginToClient(comment.user),
+  });
+
 export const adaptCommentsToClient =
   (comments: CommentDto[]): Comment[] =>
     comments
