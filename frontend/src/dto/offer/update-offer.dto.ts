@@ -1,6 +1,6 @@
 import { Amenity, City, Property } from './offer-types';
 
-export class UpdateOfferDto {
+export default class UpdateOfferDto {
   public title?: string;
 
   public description?: string;

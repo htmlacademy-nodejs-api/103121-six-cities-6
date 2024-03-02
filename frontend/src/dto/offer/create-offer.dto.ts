@@ -1,9 +1,9 @@
 import { Amenity, City, Property, Coordinates } from './offer-types';
 
-export class CreateOfferDto {
+export default class CreateOfferDto {
   public title!: string;
 
-  public description: string;
+  public description!: string;
 
   public postDate!: Date;
 

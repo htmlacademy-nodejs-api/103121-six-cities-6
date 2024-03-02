@@ -1,9 +1,6 @@
-enum UserType {
-  Common = 'Common',
-  Pro = 'Pro',
-}
+import { UserType } from './user-type';
 
-export class CreateUserDto {
+export default class CreateUserDto {
   public name!: string;
 
   public email!: string;

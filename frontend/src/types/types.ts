@@ -19,6 +19,7 @@ export type User = {
   avatarUrl: string;
   type: UserType;
   email: string;
+  token: string;
 };
 
 export type Comment = {
@@ -68,5 +69,5 @@ export type UserAuth = Pick<User, 'email'> & { password: string };
 export type CommentAuth = NewComment &
   Pick<Offer, 'id'>;
 export type FavoriteAuth = Offer['id'];
-export type UserRegister = Omit<User, 'avatarUrl'> &
+export type UserRegister = Omit<User, 'avatarUrl' | 'token'> &
   Pick<UserAuth, 'password'> & { avatar?: File };

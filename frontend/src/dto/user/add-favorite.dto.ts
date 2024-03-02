@@ -1,3 +1,3 @@
-export class AddRemoveFavoriteDto {
+export default class AddRemoveFavoriteDto {
   public offerId!: string;
 }

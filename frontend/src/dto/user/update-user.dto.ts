@@ -1,3 +1,3 @@
-export class UpdateUserDto {
+export default class UpdateUserDto {
   public avatar?: string;
 }

@@ -135,6 +135,6 @@
       "smite.jpg",
       "coffee.jpg"
     ],
-    "userTypes" : ["Common", "Pro"]
+    "userTypes" : ["Regular", "Pro"]
   }
 }

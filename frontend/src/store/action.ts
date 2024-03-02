@@ -4,6 +4,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { UserAuth, User, Offer, Comment, CommentAuth, FavoriteAuth, UserRegister, NewOffer } from '../types/types';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 import { Token } from '../utils';
+import { adaptAvatarToServer, adaptSignupToServer } from '../utils/adapters/adaptersToServer';
+import UserDto from '../dto/user/user.dto';
+import UserWithTokenDto from '../dto/user/user-with-token.dto';
 
 type Extra = {
   api: AxiosInstance;
@@ -136,7 +139,7 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<User & { token: string }>(ApiRoute.Login, { email, password });
+    const { data } = await api.post<UserWithTokenDto>(ApiRoute.Login, { email, password });
     const { token } = data;
 
     Token.save(token);
@@ -158,16 +161,9 @@ export const registerUser = createAsyncThunk<void, UserRegister, { extra: Extra 
   Action.REGISTER_USER,
   async ({ email, password, name, avatar, type }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<{ id: string }>(ApiRoute.Register, {
-      email,
-      password,
-      name,
-      type,
-    });
-    if (avatar) {
-      const payload = new FormData();
-      payload.append('avatar', avatar);
-      await api.post(`/${data.id}${ApiRoute.Avatar}`, payload, {
+    const postData = await api.post<UserDto>(ApiRoute.Register, adaptSignupToServer({ email, password, name, type }));
+    if (postData.status === HttpCode.Created && (postData.data.avatar)) {
+      await api.post(`${ApiRoute.Users}/${postData.data.id}${ApiRoute.Avatar}`, adaptAvatarToServer(postData.data.avatar), {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
     }

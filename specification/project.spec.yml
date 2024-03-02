@@ -454,9 +454,9 @@ components:
         userType:
           type: string
           enum:
-            - Common
+            - Regular
             - Pro
-          example: Common
+          example: Regular
 
     authUser:
       type: object
@@ -493,9 +493,9 @@ components:
         userType:
           type: string
           enum:
-            - Common
+            - Regular
             - Pro
-          example: Common
+          example: Regular
 
     authToken:
       type: object
