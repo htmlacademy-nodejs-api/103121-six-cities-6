@@ -1,3 +1,3 @@
 export class AddRemoveFavoriteDto {
-  public offerId: string;
+  public id: string;
 }

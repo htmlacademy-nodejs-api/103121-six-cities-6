@@ -348,7 +348,7 @@ paths:
         "404":
           description: Избранные предложения не найдены.
 
-  /user/favorites:
+  /users/favorites:
     post:
       tags:
         - users
@@ -391,7 +391,7 @@ paths:
         "404":
           description: Предложение не найдено.
 
-  /user/{id}/avatar:
+  /users/{id}/avatar:
     post:
       tags:
         - users
@@ -454,9 +454,9 @@ components:
         userType:
           type: string
           enum:
-            - Common
+            - Regular
             - Pro
-          example: Common
+          example: Regular
 
     authUser:
       type: object
@@ -493,9 +493,9 @@ components:
         userType:
           type: string
           enum:
-            - Common
+            - Regular
             - Pro
-          example: Common
+          example: Regular
 
     authToken:
       type: object
@@ -524,11 +524,11 @@ components:
         propertyType:
           type: string
           enum:
-            - Apartment
-            - House
-            - Room
-            - Hotel
-          example: Apartment
+            - apartment
+            - house
+            - room
+            - hotel
+          example: apartment
 
         isFavorite:
           type: boolean
@@ -549,6 +549,10 @@ components:
             - Hamburg
             - Dusseldorf
           example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
 
         isPremium:
           type: boolean
@@ -585,11 +589,11 @@ components:
         propertyType:
           type: string
           enum:
-            - Apartment
-            - House
-            - Room
-            - Hotel
-          example: Apartment
+            - apartment
+            - house
+            - room
+            - hotel
+          example: apartment
 
         isFavorite:
           type: boolean
@@ -610,6 +614,10 @@ components:
             - Hamburg
             - Dusseldorf
           example: Paris
+
+        previewImage:
+          type: string
+          example: preview.jpg
 
         propertyImages:
           type: array

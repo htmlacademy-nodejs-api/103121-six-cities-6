@@ -28,6 +28,16 @@
       "Hamburg",
       "Dusseldorf"
     ],
+    "previewImages": [
+      "https://example.com/studio-preview.jpg",
+      "https://example.com/park-view.jpg",
+      "https://example.com/penthouse.jpg",
+      "https://example.com/elegant-apartment.jpg",
+      "https://example.com/studio-panorama.jpg",
+      "https://example.com/suburban-house.jpg",
+      "https://example.com/industrial-loft.jpg",
+      "https://example.com/riverfront-apartment.jpg"
+    ],
     "propertyImages": [
       [
         "https://example.com/studio-image1.jpg",
@@ -94,7 +104,7 @@
         "https://example.com/riverfront-apartment-image6.jpg"
       ]
     ],
-    "propertyTypes": ["Apartment", "House", "Room", "Hotel"],
+    "propertyTypes": ["apartment", "house", "room", "hotel"],
     "amenities": [
       "Breakfast",
       "AirConditioning",
@@ -135,6 +145,6 @@
       "smite.jpg",
       "coffee.jpg"
     ],
-    "userTypes" : ["Common", "Pro"]
+    "userTypes" : ["Regular", "Pro"]
   }
 }
