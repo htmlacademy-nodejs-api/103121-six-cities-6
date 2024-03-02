@@ -1,7 +1,8 @@
 import UserWithTokenDto from '../../dto/user/user-with-token.dto';
-import { Offer, User } from '../../types/types';
+import { Comment, Offer, User } from '../../types/types';
 import { DetailedOfferDto } from '../../dto/offer/detailed-offer.dto';
 import { CityLocation } from '../../const';
+import CommentDto from '../../dto/comment/comment.dto';
 
 export const adaptLoginToClient =
   (user: UserWithTokenDto): User => ({
@@ -60,4 +61,15 @@ export const adaptOffersToClient =
         images: offer.propertyImages,
         maxAdults: offer.guestsNumber,
         host: adaptLoginToClient(offer.user),
+      }));
+
+export const adaptCommentsToClient =
+  (comments: CommentDto[]): Comment[] =>
+    comments
+      .map((comment: CommentDto) => ({
+        id: comment.id,
+        comment: comment.text,
+        date: comment.postDate,
+        rating: comment.rating,
+        user: adaptLoginToClient(comment.user),
       }));

@@ -9,7 +9,8 @@ import { adaptAvatarToServer, adaptSignupToServer } from '../utils/adapters/adap
 import UserDto from '../dto/user/user.dto';
 import UserWithTokenDto from '../dto/user/user-with-token.dto';
 import { DetailedOfferDto } from '../dto/offer/detailed-offer.dto';
-import { adaptOfferToClient, adaptOffersToClient } from '../utils/adapters/adaptersToClient';
+import { adaptCommentsToClient, adaptOfferToClient, adaptOffersToClient } from '../utils/adapters/adaptersToClient';
+import CommentDto from '../dto/comment/comment.dto';
 
 type Extra = {
   api: AxiosInstance;
@@ -113,9 +114,9 @@ export const fetchComments = createAsyncThunk<Comment[], Offer['id'], { extra: E
   Action.FETCH_COMMENTS,
   async (id, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Comment[]>(`${ApiRoute.Offers}/${id}${ApiRoute.Comments}`);
+    const { data } = await api.get<CommentDto[]>(`${ApiRoute.Offers}/${id}${ApiRoute.Comments}`);
 
-    return data;
+    return adaptCommentsToClient(data);
   });
 
 export const fetchUserStatus = createAsyncThunk<UserAuth['email'], undefined, { extra: Extra }>(

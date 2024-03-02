@@ -31,10 +31,10 @@ const makeOffersPipeline = (userId: string) => ([
       rating: {
         $cond: {
           if: {
-            $eq: ['$commentsCount', 0]
+            $eq: ['$commentCount', 0]
           },
           then: 0,
-          else: { $divide: ['$commentRating', '$commentsCount'] }
+          else: { $divide: ['$commentRating', '$commentCount'] }
         }
       }
     }
