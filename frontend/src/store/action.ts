@@ -48,9 +48,9 @@ export const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, { extra:
   Action.FETCH_FAVORITE_OFFERS,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Offer[]>(ApiRoute.Favorite);
+    const { data } = await api.get<DetailedOfferDto[]>(`${ApiRoute.Offers}${ApiRoute.Favorite}`);
 
-    return data;
+    return adaptOffersToClient(data);
   });
 
 export const fetchOffer = createAsyncThunk<Offer, Offer['id'], { extra: Extra }>(
@@ -192,11 +192,12 @@ export const postFavorite = createAsyncThunk<
   const { api, history } = extra;
 
   try {
-    const { data } = await api.post<Offer>(
-      `${ApiRoute.Favorite}/${id}`
+    const { data } = await api.post<DetailedOfferDto>(
+      `${ApiRoute.Users}${ApiRoute.Favorite}`,
+      { id }
     );
 
-    return data;
+    return adaptOfferToClient(data);
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -216,11 +217,12 @@ export const deleteFavorite = createAsyncThunk<
   const { api, history } = extra;
 
   try {
-    const { data } = await api.delete<Offer>(
-      `${ApiRoute.Favorite}/${id}`
+    const { data } = await api.delete<DetailedOfferDto>(
+      `${ApiRoute.Users}${ApiRoute.Favorite}`,
+      { data: { id } }
     );
 
-    return data;
+    return adaptOfferToClient(data);
   } catch (error) {
     const axiosError = error as AxiosError;
 

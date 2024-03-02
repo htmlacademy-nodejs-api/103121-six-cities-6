@@ -348,7 +348,7 @@ paths:
         "404":
           description: Избранные предложения не найдены.
 
-  /user/favorites:
+  /users/favorites:
     post:
       tags:
         - users
@@ -391,7 +391,7 @@ paths:
         "404":
           description: Предложение не найдено.
 
-  /user/{id}/avatar:
+  /users/{id}/avatar:
     post:
       tags:
         - users
