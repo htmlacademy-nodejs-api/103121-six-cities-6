@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { OfferService } from './offer-service.interface.js';
-import { Component } from '../../types/index.js';
+import { Component, SortType } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
@@ -72,6 +72,7 @@ export class DefaultOfferService implements OfferService {
     return this.offerModel
       .aggregate([...makeOffersPipeline(userId)])
       .limit(count)
+      .sort({ postDate: SortType.Down })
       .exec();
   }
 
@@ -113,6 +114,7 @@ export class DefaultOfferService implements OfferService {
         ...makeOffersPipeline(userId),
       ])
       .limit(count)
+      .sort({ postDate: SortType.Down })
       .exec();
   }
 
