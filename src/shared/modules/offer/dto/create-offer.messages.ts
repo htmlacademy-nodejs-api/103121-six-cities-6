@@ -1,11 +1,24 @@
+import {
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_DESCRIPTION_LENGTH,
+  MAX_DESCRIPTION_LENGTH,
+  MIN_ROOMS_NUMBER,
+  MAX_ROOMS_NUMBER,
+  MIN_GUESTS_NUMBER,
+  MAX_GUESTS_NUMBER,
+  MIN_PRICE,
+  MAX_PRICE
+} from './offer.constant.js';
+
 export const CreateOfferValidationMessage = {
   title: {
-    minLength: 'Minimum title length must be 10',
-    maxLength: 'Maximum title length must be 100',
+    minLength: `Minimum title length must be ${MIN_TITLE_LENGTH}`,
+    maxLength: `Maximum title length must be ${MAX_TITLE_LENGTH}`,
   },
   description: {
-    minLength: 'Minimum description length must be 20',
-    maxLength: 'Maximum description length must be 1024',
+    minLength: `Minimum description length must be ${MIN_DESCRIPTION_LENGTH}`,
+    maxLength: `Maximum description length must be ${MAX_DESCRIPTION_LENGTH}`,
   },
   postDate: {
     invalidFormat: 'postDate must be a valid ISO date',
@@ -28,18 +41,18 @@ export const CreateOfferValidationMessage = {
   },
   roomsNumber: {
     invalidFormat: 'roomsNumber must be an integer',
-    minValue: 'Minimum price is 1',
-    maxValue: 'Maximum price is 8',
+    minValue: `Minimum price is ${MIN_ROOMS_NUMBER}`,
+    maxValue: `Maximum price is ${MAX_ROOMS_NUMBER}`,
   },
   guestsNumber: {
     invalidFormat: 'guestsNumber must be an integer',
-    minValue: 'Minimum price is 1',
-    maxValue: 'Maximum price is 10',
+    minValue: `Minimum price is ${MIN_GUESTS_NUMBER}`,
+    maxValue: `Maximum price is ${MAX_GUESTS_NUMBER}`,
   },
   price: {
     invalidFormat: 'Price must be an integer',
-    minValue: 'Minimum price is 100',
-    maxValue: 'Maximum price is 200000',
+    minValue: `Minimum price is ${MIN_PRICE}`,
+    maxValue: `Maximum price is ${MAX_PRICE}`,
   },
   amenities: {
     invalidFormat: 'Field amenities must be an array',

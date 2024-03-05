@@ -1,11 +1,24 @@
+import {
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_DESCRIPTION_LENGTH,
+  MAX_DESCRIPTION_LENGTH,
+  MIN_ROOMS_NUMBER,
+  MAX_ROOMS_NUMBER,
+  MIN_GUESTS_NUMBER,
+  MAX_GUESTS_NUMBER,
+  MIN_PRICE,
+  MAX_PRICE
+} from './offer.constant.js';
+
 export const UpdateOfferMessage = {
   title: {
-    minLength: 'minimum title length is 10',
-    maxLength: 'maximum title length is 100'
+    minLength: `minimum title length is ${MIN_TITLE_LENGTH}`,
+    maxLength: `maximum title length is ${MAX_TITLE_LENGTH}`
   },
   description: {
-    minLength: 'minimum description length is 20',
-    maxLength: 'maximum description length is 1024',
+    minLength: `minimum description length is ${MIN_DESCRIPTION_LENGTH}`,
+    maxLength: `maximum description length is ${MAX_DESCRIPTION_LENGTH}`,
   },
   postDate: {
     invalidFormat: 'postData must be a valid ISO date',
@@ -15,7 +28,7 @@ export const UpdateOfferMessage = {
   },
   previewImage: {
     invalidFormat: 'image is required',
-    maxLength: 'too long for field image. Maximum length is 256'
+    maxLength: 'Too long for field image'
   },
   propertyImages: {
     invalidFormat: 'Field propertyImages must be an array',
@@ -29,18 +42,18 @@ export const UpdateOfferMessage = {
   },
   roomsNumber: {
     invalidFormat: 'roomsNumber must be an integer',
-    minValue: 'Minimum price is 1',
-    maxValue: 'Maximum price is 8',
+    minValue: `Minimum price is ${MIN_ROOMS_NUMBER}`,
+    maxValue: `Maximum price is ${MAX_ROOMS_NUMBER}`,
   },
   guestsNumber: {
     invalidFormat: 'guestsNumber must be an integer',
-    minValue: 'Minimum price is 1',
-    maxValue: 'Maximum price is 10',
+    minValue: `Minimum price is ${MIN_GUESTS_NUMBER}`,
+    maxValue: `Maximum price is ${MAX_GUESTS_NUMBER}`,
   },
   price: {
     invalidFormat: 'price must be an integer',
-    minValue: 'minimum price is 100',
-    maxValue: 'maximum price is 20000'
+    minValue: `minimum price is ${MIN_PRICE}`,
+    maxValue: `maximum price is ${MAX_PRICE}`
   },
   amenities: {
     invalidFormat: 'Field amenities must be an array',

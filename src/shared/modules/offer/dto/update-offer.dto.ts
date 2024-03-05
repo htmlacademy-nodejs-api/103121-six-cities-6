@@ -15,16 +15,29 @@ import {
   IsBoolean
 } from 'class-validator';
 import { UpdateOfferMessage } from './update-offer.messages.js';
+import {
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  MIN_DESCRIPTION_LENGTH,
+  MAX_DESCRIPTION_LENGTH,
+  IMAGE_URL_MAX_LENGTH,
+  MIN_ROOMS_NUMBER,
+  MAX_ROOMS_NUMBER,
+  MIN_GUESTS_NUMBER,
+  MAX_GUESTS_NUMBER,
+  MIN_PRICE,
+  MAX_PRICE
+} from './offer.constant.js';
 
 export class UpdateOfferDto {
   @IsOptional()
-  @MinLength(10,{ message: UpdateOfferMessage.title.minLength })
-  @MaxLength(100, { message: UpdateOfferMessage.title.maxLength })
+  @MinLength(MIN_TITLE_LENGTH,{ message: UpdateOfferMessage.title.minLength })
+  @MaxLength(MAX_TITLE_LENGTH, { message: UpdateOfferMessage.title.maxLength })
   public title?: string;
 
   @IsOptional()
-  @MinLength(20, { message: UpdateOfferMessage.description.minLength })
-  @MaxLength(1024, { message: UpdateOfferMessage.description.maxLength })
+  @MinLength(MIN_DESCRIPTION_LENGTH, { message: UpdateOfferMessage.description.minLength })
+  @MaxLength(MAX_DESCRIPTION_LENGTH, { message: UpdateOfferMessage.description.maxLength })
   public description?: string;
 
   @IsOptional()
@@ -37,12 +50,12 @@ export class UpdateOfferDto {
 
   @IsOptional()
   @IsString({ message: UpdateOfferMessage.previewImage.invalidFormat })
-  @MaxLength(256, { message: UpdateOfferMessage.previewImage.maxLength })
+  @MaxLength(IMAGE_URL_MAX_LENGTH, { message: UpdateOfferMessage.previewImage.maxLength })
   public previewImage?: string;
 
   @IsOptional()
   @IsArray({ message: UpdateOfferMessage.propertyImages.invalidFormat })
-  @MaxLength(256, { each: true, message: UpdateOfferMessage.propertyImages.maxLength })
+  @MaxLength(IMAGE_URL_MAX_LENGTH, { each: true, message: UpdateOfferMessage.propertyImages.maxLength })
   public propertyImages?: string[];
 
   @IsOptional()
@@ -55,20 +68,20 @@ export class UpdateOfferDto {
 
   @IsOptional()
   @IsInt({ message: UpdateOfferMessage.roomsNumber.invalidFormat })
-  @Min(1, { message: UpdateOfferMessage.roomsNumber.minValue })
-  @Max(8, { message: UpdateOfferMessage.roomsNumber.maxValue })
+  @Min(MIN_ROOMS_NUMBER, { message: UpdateOfferMessage.roomsNumber.minValue })
+  @Max(MAX_ROOMS_NUMBER, { message: UpdateOfferMessage.roomsNumber.maxValue })
   public roomsNumber?: number;
 
   @IsOptional()
   @IsInt({ message: UpdateOfferMessage.guestsNumber.invalidFormat })
-  @Min(1, { message: UpdateOfferMessage.guestsNumber.minValue })
-  @Max(10, { message: UpdateOfferMessage.guestsNumber.maxValue })
+  @Min(MIN_GUESTS_NUMBER, { message: UpdateOfferMessage.guestsNumber.minValue })
+  @Max(MAX_GUESTS_NUMBER, { message: UpdateOfferMessage.guestsNumber.maxValue })
   public guestsNumber?: number;
 
   @IsOptional()
   @IsInt({ message: UpdateOfferMessage.price.invalidFormat })
-  @Min(100, { message: UpdateOfferMessage.price.minValue })
-  @Max(100000, { message: UpdateOfferMessage.price.maxValue })
+  @Min(MIN_PRICE, { message: UpdateOfferMessage.price.minValue })
+  @Max(MAX_PRICE, { message: UpdateOfferMessage.price.maxValue })
   public price?: number;
 
   @IsOptional()
