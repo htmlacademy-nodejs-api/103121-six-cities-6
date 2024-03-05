@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { CommentService } from './comment-service.interface.js';
-import { Component } from '../../types/index.js';
+import { Component, SortType } from '../../types/index.js';
 import { DocumentType, types } from '@typegoose/typegoose';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
@@ -21,6 +21,7 @@ export class DefaultCommentService implements CommentService {
       .find({offerId})
       .populate('userId')
       .limit(count)
+      .sort({ createdAt: SortType.Down })
       .exec();
   }
 
